@@ -94,15 +94,6 @@ class MapApp extends Component {
     window.removeEventListener('resize', this._handleResize);
   }
 
-  _loadCsvFile(path, onDataLoaded) {
-    request.csv(path, (error, data) => {
-      if (error) {
-        console.error(error);
-      }
-      onDataLoaded(data);
-    });
-  }
-
   @autobind _handleResize() {
     this.setState({width: window.innerWidth, height: window.innerHeight});
   }
