@@ -103,6 +103,7 @@
     "test-electron": "browserify test/electron.js | testron | faucet",
     "start": "budo example/main.js:example/bundle.js --live --open --port 3000 --css example/main.css --title 'deck.gl' --watch-glob '**/*.{html,css,js,glsl}' -- -t babelify -t envify",
     "t1": "budo tutorials/t1-map-skeleton/main.js:tutorials/bundle.js --live --open --port 3000 --css tutorials/main.css --title 'map skeleton' --watch-glob '**/*.{html,css,js,glsl}' -- -t babelify -t envify",
-    "t2": "budo tutorials/t2-map-overlay/main.js:tutorials/bundle.js --live --open --port 3000 --css tutorials/main.css --title 'map overlay' --watch-glob '**/*.{html,css,js,glsl}' -- -t babelify -t envify"
+    "t2": "budo tutorials/t2-map-overlay/main.js:tutorials/bundle.js --live --open --port 3000 --css tutorials/main.css --title 'map overlay' --watch-glob '**/*.{html,css,js,glsl}' -- -t babelify -t envify",
+    "t3": "budo tutorials/t3-layer-subclass/main.js:tutorials/bundle.js --live --open --port 3000 --css tutorials/main.css --title 'map overlay' --watch-glob '**/*.{html,css,js,glsl}' -- -t babelify -t glslify -t envify"
   }
 }
