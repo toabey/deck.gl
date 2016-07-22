@@ -23,7 +23,7 @@ import {Model, Program, Geometry} from 'luma.gl';
 const glslify = require('glslify');
 
 const ATTRIBUTES = {
-  instancePositions: {size: 4, 0: 'x', 1: 'y', 2: 'z', 3: 'radius'},
+  instancePositions: {size: 3, 0: 'x', 1: 'y', 2: 'z'},
   instanceColors: {size: 3, 0: 'r', 1: 'g', 2: 'b'}
 };
 
