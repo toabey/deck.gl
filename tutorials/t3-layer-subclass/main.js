@@ -132,7 +132,7 @@ class MapApp extends Component {
           height={height}
           perspectiveEnabled
           {...mapProps}
-          onChangeViewport={this._handleChangeViewport}/>
+          onChangeViewport={this._handleChangeViewport}>
         <DeckGLOverlay
           width={width}
           height={height}
@@ -149,6 +149,7 @@ class MapApp extends Component {
               onClick: this._onClick
             })
           ]}/>
+        </MapGL>
       </div>
     );
   }
