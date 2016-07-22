@@ -23,9 +23,72 @@ import {Model, Program, Geometry} from 'luma.gl';
 const glslify = require('glslify');
 
 const ATTRIBUTES = {
-  instancePositions: {size: 3, '0': 'x', '1': 'y', '2': 'unused'},
-  instanceColors: {size: 3, '0': 'red', '1': 'green', '2': 'blue'}
+  instancePositions: {size: 4, 0: 'x', 1: 'y', 2: 'z', 3: 'radius'},
+  instanceColors: {size: 3, 0: 'r', 1: 'g', 2: 'b'}
 };
+
+const MERCATOR_PROJECT = `
+const float TILE_SIZE = 512.0;
+const float PI = 3.1415926536;
+const float WORLD_SCALE = TILE_SIZE / (PI * 2.0);
+
+// non-linear projection: lnglats => zoom 0 tile [0-512, 0-512] * scale
+vec2 mercatorProject(vec2 lnglat, float zoomScale) {
+  float scale = WORLD_SCALE * zoomScale;
+  return vec2(
+    scale * (radians(lnglat.x) + PI),
+    scale * (PI - log(tan(PI * 0.25 + radians(lnglat.y) * 0.5)))
+  );
+}
+`;
+
+const VERTEX_SHADER = `
+#define SHADER_NAME enhanced-scatterplot-layer-vs
+
+${MERCATOR_PROJECT}
+
+uniform float mercatorScale;
+
+attribute vec3 positions;
+attribute vec3 instancePositions;
+attribute vec3 instanceColors;
+attribute vec3 instancePickingColors;
+
+uniform float radius;
+uniform float opacity;
+
+uniform mat4 worldMatrix;
+uniform mat4 projectionMatrix;
+
+varying vec4 vColor;
+uniform float renderPickingBuffer;
+
+void main(void) {
+  vec2 pos = mercatorProject(instancePositions.xy, mercatorScale);
+  // Need to add one to elevation to show up in untilted mode
+  vec3 p = vec3(pos, instancePositions.z + 1.) + positions * radius;
+  gl_Position = projectionMatrix * vec4(p, 1.0);
+
+  vec4 color = vec4(instanceColors / 255.0, 1.);
+  vec4 pickingColor = vec4(instancePickingColors / 255.0, 1.);
+  vColor = mix(color, pickingColor, renderPickingBuffer);
+}
+`;
+
+const FRAGMENT_SHADER = `
+#define SHADER_NAME enhanced-scatterplot-layer-fs
+
+#ifdef GL_ES
+precision highp float;
+#endif
+
+varying vec4 vColor;
+
+void main(void) {
+  gl_FragColor = vColor;
+}
+`;
+
 
 export default class EnhancedScatterplotLayer extends Layer {
 
@@ -83,10 +146,12 @@ export default class EnhancedScatterplotLayer extends Layer {
     }
 
     return new Model({
+      id: 'enhanced-scatterplot',
       program: new Program(gl, {
-        vs: glslify('./enhanced-scatterplot-layer-vertex.glsl'),
-        fs: glslify('./enhanced-scatterplot-layer-fragment.glsl'),
-        id: 'scatterplot'
+        vs: VERTEX_SHADER,
+        fs: FRAGMENT_SHADER
+        // vs: glslify('./enhanced-scatterplot-layer-vertex.glsl'),
+        // fs: glslify('./enhanced-scatterplot-layer-fragment.glsl'),
       }),
       geometry: new Geometry({
         drawMode: 'TRIANGLE_FAN',
@@ -112,6 +177,7 @@ export default class EnhancedScatterplotLayer extends Layer {
       value[i + 0] = point.position.x;
       value[i + 1] = point.position.y;
       value[i + 2] = point.position.z;
+      value[i + 3] = point.radius || 1;
       i += size;
     }
   }

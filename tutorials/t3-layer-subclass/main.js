@@ -50,7 +50,7 @@ const reducer = (state = INITIAL_STATE, action) => {
           y: Number(coords[0]),
           z: 0
         },
-        color: [88, 9, 124]
+        color: [88, 9, Math.random() * 124]
       };
     });
     return {...state, points};

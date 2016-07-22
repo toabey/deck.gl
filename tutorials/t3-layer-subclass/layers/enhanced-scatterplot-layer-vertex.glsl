@@ -4,7 +4,7 @@
 uniform float mercatorScale;
 
 attribute vec3 positions;
-attribute vec3 instancePositions;
+attribute vec4 instancePositions;
 attribute vec3 instanceColors;
 attribute vec3 instancePickingColors;
 
@@ -20,7 +20,8 @@ uniform float renderPickingBuffer;
 void main(void) {
   vec2 pos = mercatorProject(instancePositions.xy, mercatorScale);
   // Need to add one to elevation to show up in untilted mode
-  vec3 p = vec3(pos, instancePositions.z + 1.) + positions * radius;
+  float combinedRadius = radius * instancePositions.w;
+  vec3 p = vec3(pos, instancePositions.z + 1.) + positions * combinedRadius;
   gl_Position = projectionMatrix * vec4(p, 1.0);
 
   vec4 color = vec4(instanceColors / 255.0, 1.);
