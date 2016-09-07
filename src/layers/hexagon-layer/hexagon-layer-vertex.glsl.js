@@ -18,31 +18,45 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-/* vertex shader for the grid-layer */
-#define SHADER_NAME grid-layer-vs
+import PROJECT from '../../../shaderlib/project.glsl';
 
-attribute vec3 vertices;
-attribute vec3 instancePositions;
-attribute vec4 instanceColors;
+/* fragment shader for the hexagon-layer */
+export default `
+#define SHADER_NAME hexagon-layer-vertex-shader
+
+${PROJECT}
+
+attribute vec3 positions;
+attribute vec2 instancePositions;
+attribute float instanceElevations;
+attribute vec3 instanceColors;
 attribute vec3 instancePickingColors;
-
-uniform float mercatorScale;
-
-uniform float maxCount;
-uniform float opacity;
-uniform float renderPickingBuffer;
-uniform vec3 scale;
-uniform vec3 selectedPickingColor;
 
 uniform mat4 worldMatrix;
 uniform mat4 projectionMatrix;
 
+uniform float radius;
+uniform float opacity;
+uniform float angle;
+uniform float elevation;
+
+uniform float renderPickingBuffer;
+uniform vec3 selected;
 varying vec4 vColor;
 
 void main(void) {
-  float alpha = instancePickingColors == selectedPickingColor ? 1.5 * instanceColors.w : instanceColors.w;
-  vColor = vec4(mix(instanceColors.xyz / maxCount, instancePickingColors / 255., renderPickingBuffer), alpha);
+  mat2 rotationMatrix = mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
+  vec3 vertex = vec3(vec2(rotationMatrix * positions.xz * radius), 0.0);
+  vec3 center = vec3(
+    project(instancePositions),
+    instanceElevations * (positions.y + 0.5) * elevation
+  );
 
-  vec3 p = instancePositions + vertices * scale / mercatorScale;
-  gl_Position = projectionMatrix * worldMatrix * vec4(p, 1.0);
+  gl_Position = projectionMatrix * vec4(center, 1.0) +
+                projectionMatrix * vec4(vertex, 0.0);
+
+  vec4 color = vec4(instanceColors / 255.0, opacity);
+  vec4 pickingColor = vec4(instancePickingColors / 255.0, 1.);
+  vColor = mix(color, pickingColor, renderPickingBuffer);
 }
+`;

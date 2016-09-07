@@ -18,6 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+export default `
 #define SHADER_NAME scatterplot-layer-fragment-shader
 
 #ifdef GL_ES
@@ -29,3 +30,4 @@ varying vec4 vColor;
 void main(void) {
   gl_FragColor = vColor;
 }
+`;

@@ -10,5 +10,3 @@ vec2 mercatorProject(vec2 lnglat, float zoomScale) {
   	scale * (PI - log(tan(PI * 0.25 + radians(lnglat.y) * 0.5)))
   );
 }
-
-#pragma glslify: export(mercatorProject)

@@ -20,10 +20,9 @@
 
 import BaseLayer from '../base-layer';
 import {Model, Program, Geometry} from 'luma.gl';
-const glslify = require('glslify');
 
-const ATTRIBUTES = {
-};
+import VERTEX_SHADER from './line-layer-vertex.glsl';
+import FRAGMENT_SHADER from './line-layer-fragment.glsl';
 
 export default class LineLayer extends BaseLayer {
   /**
@@ -66,8 +65,8 @@ export default class LineLayer extends BaseLayer {
 
     return new Model({
       program: new Program(gl, {
-        vs: glslify('./line-layer-vertex.glsl'),
-        fs: glslify('./line-layer-fragment.glsl'),
+        vs: VERTEX_SHADER,
+        fs: FRAGMENT_SHADER,
         id: 'line'
       }),
       geometry: new Geometry({

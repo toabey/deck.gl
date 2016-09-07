@@ -20,7 +20,9 @@
 
 import BaseLayer from '../base-layer';
 import {Model, Program, Geometry} from 'luma.gl';
-const glslify = require('glslify');
+
+import VERTEX_SHADER from './arc-layer-vertex.glsl';
+import FRAGMENT_SHADER from './arc-layer-fragment.glsl';
 
 const RED = [255, 0, 0];
 const BLUE = [0, 0, 255];
@@ -77,8 +79,8 @@ export default class ArcLayer extends BaseLayer {
 
     return new Model({
       program: new Program(gl, {
-        vs: glslify('./arc-layer-vertex.glsl'),
-        fs: glslify('./arc-layer-fragment.glsl'),
+        vs: VERTEX_SHADER,
+        fs: FRAGMENT_SHADER,
         id: 'arc'
       }),
       geometry: new Geometry({

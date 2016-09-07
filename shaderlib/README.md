@@ -1,7 +1,7 @@
 # shaderlib
 
-A set of reuseable shader functions that can be imported individually
-using `glslify`. Sometimes accompanied by javascript code that can be
+A set of reuseable shader functions that can be imported individually.
+Sometimes accompanied by javascript code that can be
 used to calculate necessary parameters in app before using the shaders.
 
 ## Projections

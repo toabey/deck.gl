@@ -1,5 +1,3 @@
-#pragma glslify: mercatorProject = require(./mercator-project)
-
 // non-linear projection: lnglats => space/camera coordinates
 vec2 mercatorProjectViewport(
   vec2 lnglat,
@@ -22,5 +20,3 @@ vec2 mercatorProjectViewport(
   // flip y
   return scaledXY * vec2(1.0, -1.0);
 }
-
-#pragma glslify: export(mercatorProjectViewport)

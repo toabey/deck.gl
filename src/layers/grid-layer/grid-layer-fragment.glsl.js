@@ -18,39 +18,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#define SHADER_NAME line-layer-vertex-shader
+/* fragment shader for the grid-layer */
+export default `
+#define SHADER_NAME grid-layer-fs
 
-#pragma glslify: project = require(../../../shaderlib/project)
-
-attribute vec3 positions;
-attribute vec3 instanceColors;
-attribute vec4 instancePositions;
-attribute vec3 instancePickingColors;
-
-uniform mat4 worldMatrix;
-uniform mat4 projectionMatrix;
-uniform float opacity;
-uniform float renderPickingBuffer;
+#ifdef GL_ES
+precision highp float;
+#endif
 
 varying vec4 vColor;
 
 void main(void) {
-  vec2 source = project(instancePositions.xy);
-  vec2 target = project(instancePositions.zw);
-
-  float segmentIndex = positions.x;
-  vec3 p = vec3(
-    // xy: linear interpolation of source & target
-    mix(source, target, segmentIndex),
-    // As per similar comment in choropleth-layer-vertex.glsl
-    // For some reason, need to add one to elevation to show up in untilted mode
-    // This seems to be only a problem on a Mac and not in Windows.
-    1.0
-  );
-
-  gl_Position = projectionMatrix * vec4(p, 1.0);
-
-  vec4 color = vec4(instanceColors / 255.0, opacity);
-  vec4 pickingColor = vec4(instancePickingColors / 255.0, opacity);
-  vColor = mix(color, pickingColor, renderPickingBuffer);
+  gl_FragColor = vColor;
 }
+`;

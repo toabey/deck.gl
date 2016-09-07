@@ -18,9 +18,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+import PROJECT from '../../../shaderlib/project.glsl';
+
+export default `
 #define SHADER_NAME arc-layer-vertex-shader
 
-#pragma glslify: project = require(../../../shaderlib/project)
+${PROJECT}
 
 const float N = 49.0;
 
@@ -65,3 +68,4 @@ void main(void) {
   vec4 pickingColor = vec4(instancePickingColors / 255.0, opacity);
   vColor = mix(color, pickingColor, renderPickingBuffer);
 }
+`;

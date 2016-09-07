@@ -23,7 +23,9 @@ import earcut from 'earcut';
 import flattenDeep from 'lodash.flattendeep';
 import normalize from 'geojson-normalize';
 import {Model, Program, Geometry} from 'luma.gl';
-const glslify = require('glslify');
+
+import VERTEX_SHADER from './choropleth-layer-vertex.glsl';
+import FRAGMENT_SHADER from './choropleth-layer-fragment.glsl';
 
 export default class ChoroplethLayer extends BaseLayer {
   /**
@@ -85,8 +87,8 @@ export default class ChoroplethLayer extends BaseLayer {
   getModel(gl) {
     return new Model({
       program: new Program(gl, {
-        vs: glslify('./choropleth-layer-vertex.glsl'),
-        fs: glslify('./choropleth-layer-fragment.glsl'),
+        vs: VERTEX_SHADER,
+        fs: FRAGMENT_SHADER,
         id: 'choropleth'
       }),
       geometry: new Geometry({

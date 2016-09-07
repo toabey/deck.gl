@@ -20,7 +20,9 @@
 
 import BaseLayer from '../base-layer';
 import {Model, Program, Geometry} from 'luma.gl';
-const glslify = require('glslify');
+
+import VERTEX_SHADER from './scatterplot-layer-vertex.glsl';
+import FRAGMENT_SHADER from './scatterplot-layer-fragment.glsl';
 
 export default class ScatterplotLayer extends BaseLayer {
   /*
@@ -74,8 +76,8 @@ export default class ScatterplotLayer extends BaseLayer {
 
     return new Model({
       program: new Program(gl, {
-        vs: glslify('./scatterplot-layer-vertex.glsl'),
-        fs: glslify('./scatterplot-layer-fragment.glsl'),
+        vs: VERTEX_SHADER,
+        fs: FRAGMENT_SHADER,
         id: 'scatterplot'
       }),
       geometry: new Geometry({

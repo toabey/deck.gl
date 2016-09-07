@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-/* fragment shader for the grid-layer */
-#define SHADER_NAME grid-layer-fs
+export default `
+#define SHADER_NAME arc-layer-fragment-shader
 
 #ifdef GL_ES
 precision highp float;
@@ -30,3 +30,4 @@ varying vec4 vColor;
 void main(void) {
   gl_FragColor = vColor;
 }
+`;

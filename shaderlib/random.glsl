@@ -6,5 +6,3 @@ highp float random(vec2 co) {
   highp float sn= mod(dt,3.14);
   return fract(sin(sn) / c) - .5;
 }
-
-#pragma glslify: export(random)

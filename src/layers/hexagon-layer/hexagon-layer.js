@@ -21,7 +21,9 @@
 
 import BaseLayer from '../base-layer';
 import {Model, Program, CylinderGeometry} from 'luma.gl';
-const glslify = require('glslify');
+
+import VERTEX_SHADER from './hexagon-layer-vertex.glsl';
+import FRAGMENT_SHADER from './hexagon-layer-fragment.glsl';
 
 const _getCentroid = x => x.centroid;
 const _getElevation = x => x.elevation || 0;
@@ -118,8 +120,8 @@ export default class HexagonLayer extends BaseLayer {
     return new Model({
       id: this.props.id,
       program: new Program(gl, {
-        vs: glslify('./hexagon-layer-vertex.glsl'),
-        fs: glslify('./hexagon-layer-fragment.glsl'),
+        vs: VERTEX_SHADER,
+        fs: FRAGMENT_SHADER,
         id: 'hexagon'
       }),
       geometry,

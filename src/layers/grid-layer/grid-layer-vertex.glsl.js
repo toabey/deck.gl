@@ -18,45 +18,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-/* vertex shader for the scatterplot-layer */
-#define SHADER_NAME test-layer-vs
+/* vertex shader for the grid-layer */
+export default `
+#define SHADER_NAME grid-layer-vs
 
-#pragma glslify: random = require(../../shaderlib/random)
-
-#pragma glslify: mercatorProject = require(../../shaderlib/mercator-project)
-uniform float mercatorScale;
-
-attribute vec3 positions;
+attribute vec3 vertices;
 attribute vec3 instancePositions;
-attribute vec3 instanceColors;
+attribute vec4 instanceColors;
 attribute vec3 instancePickingColors;
 
-uniform float radius;
+uniform float mercatorScale;
+
+uniform float maxCount;
 uniform float opacity;
+uniform float renderPickingBuffer;
+uniform vec3 scale;
+uniform vec3 selectedPickingColor;
 
 uniform mat4 worldMatrix;
 uniform mat4 projectionMatrix;
 
 varying vec4 vColor;
-uniform float renderPickingBuffer;
 
 void main(void) {
-  gl_Position = vec4(positions, 1.0);
-  // vec2 pos = mercatorProject(instancePositions.xy);
-  // vec3 p = vec3(pos, instancePositions.z) + positions * radius;
-  // // gl_Position = projectionMatrix * vec4(p, 1.0);
-  // // float rand = random(pos);
-  // // gl_Position = vec4(rand, rand, 0, 1.);
+  float alpha = instancePickingColors == selectedPickingColor ? 1.5 * instanceColors.w : instanceColors.w;
+  vColor = vec4(mix(instanceColors.xyz / maxCount, instancePickingColors / 255., renderPickingBuffer), alpha);
 
-  // vec4 color = vec4(instanceColors / 255.0, 1.);
-  // vec4 pickingColor = vec4(instancePickingColors / 255.0, 1.);
-  // vColor = mix(color, pickingColor, renderPickingBuffer);
-
-  // vec2 pos = mercatorProject(instancePositions.xy, mercatorScale);
-  // vec3 p = vec3(pos, instancePositions.z) + positions * radius;
-  // gl_Position = projectionMatrix * vec4(p, 1.0);
-
-  // vec4 color = vec4(instanceColors / 255.0, 1.);
-  // vec4 pickingColor = vec4(instancePickingColors / 255.0, 1.);
-  // vColor = mix(color, pickingColor, renderPickingBuffer);
+  vec3 p = instancePositions + vertices * scale / mercatorScale;
+  gl_Position = projectionMatrix * worldMatrix * vec4(p, 1.0);
 }
+`;

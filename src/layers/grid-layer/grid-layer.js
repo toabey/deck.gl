@@ -20,7 +20,9 @@
 
 import BaseLayer from '../base-layer';
 import {Model, Program, Geometry} from 'luma.gl';
-const glslify = require('glslify');
+
+import VERTEX_SHADER from './grid-layer-vertex.glsl';
+import FRAGMENT_SHADER from './grid-layer-fragment.glsl';
 
 export default class GridLayer extends BaseLayer {
   /**
@@ -70,8 +72,8 @@ export default class GridLayer extends BaseLayer {
   getModel(gl) {
     return new Model({
       program: new Program(gl, {
-        vs: glslify('./grid-layer-vertex.glsl'),
-        fs: glslify('./grid-layer-fragment.glsl'),
+        vs: VERTEX_SHADER,
+        fs: FRAGMENT_SHADER,
         id: 'grid'
       }),
       geometry: new Geometry({

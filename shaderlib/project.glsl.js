@@ -1,3 +1,4 @@
+export default `
 const float TILE_SIZE = 512.0;
 const float PI = 3.1415926536;
 const float WORLD_SCALE = TILE_SIZE / (PI * 2.0);
@@ -20,5 +21,4 @@ vec2 project(vec2 position) {
     return mercatorProject(position) * WORLD_SCALE * mercatorScale;
   }
 }
-
-#pragma glslify: export(project)
+`;
