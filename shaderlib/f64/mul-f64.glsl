@@ -10,8 +10,10 @@ vec2 twoProd(float a, float b) {
   float prod = a * b;
   vec2 a_f64 = split(a);
   vec2 b_f64 = split(b);
-  float err = ((a_f64.x * b_f64.x - prod) + a_f64.x * b_f64.y +
-    a_f64.y * b_f64.x) + a_f64.y * b_f64.y;
+  //float err = ((a_f64.x * b_f64.x - prod) + a_f64.x * b_f64.y +
+  //  a_f64.y * b_f64.x) + a_f64.y * b_f64.y;
+  float err =  a_f64.y * b_f64.y - (((prod - a_f64.x * b_f64.x) - a_f64.x * b_f64.y) -
+    a_f64.y * b_f64.x);
   return vec2(prod, err);
 }
 
@@ -21,13 +23,13 @@ vec2 quickTwoSum(float a, float b) {
   return vec2(sum, err);
 }
 
-vec2 mult_64(vec2 a, vec2 b) {
+vec2 mul_f64(vec2 a, vec2 b) {
   vec2 prod = twoProd(a.x, b.x);
   // y component is for the error
   prod.y += a.x * b.y;
-  prod.y == a.y * b.x;
+  prod.y += a.y * b.x;
   prod = quickTwoSum(prod.x, prod.y);
   return prod;
 }
 
-#pragma glslify: export(mult_64)
+#pragma glslify: export(mul_f64)

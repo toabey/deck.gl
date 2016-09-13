@@ -61,7 +61,9 @@ const INITIAL_STATE = {
   mapViewState: {
     latitude: 37.751537058389985,
     longitude: -122.42694203247012,
-    zoom: 11.5
+    zoom: 11.5,
+    bearing: 0,
+    pitch: 0
   },
   choropleths: null,
   hexagons: null,
@@ -549,14 +551,14 @@ class ExampleApp extends React.Component {
         {...mapViewState}
         layers={[
           // this._renderGridLayer(),
-          this._renderHexagonLayer(),
-          this._renderHexagonSelectionLayer(),
-          this._renderArcLayer(),
-          this._renderArcLayer2(),
-          this._renderLineLayer(),
+          //  this._renderHexagonLayer(),
+          //  this._renderHexagonSelectionLayer(),
+          // this._renderArcLayer(),
+          // this._renderArcLayer2(),
+          // this._renderLineLayer(),
           this._renderScatterplotLayer(),
-          this._renderChoroplethLayer(),
-          this._renderChoroplethContourLayer()
+          // this._renderChoroplethLayer(),
+          // this._renderChoroplethContourLayer()
         ]}
         onWebGLInitialized={ this._onWebGLInitialized }
       />

@@ -42,8 +42,14 @@ export default class ScatterplotLayer extends BaseLayer {
    * @param {object} props
    * @param {number} props.radius - point radius
    */
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
+  // }
+
+  constructor({
+    ...opts
+  } = {}) {
+    super(opts);
   }
 
   initializeState() {
@@ -58,6 +64,8 @@ export default class ScatterplotLayer extends BaseLayer {
       instancePositions: {update: this.calculateInstancePositions},
       instanceColors: {update: this.calculateInstanceColors}
     });
+
+
   }
 
   didMount() {
@@ -103,19 +111,29 @@ export default class ScatterplotLayer extends BaseLayer {
     this.setUniforms({
       radius
     });
+
   }
 
   calculateInstancePositions(attribute) {
-    const {data} = this.props;
+    const {data, latitude, longitude} = this.props;
     const {value, size} = attribute;
     let i = 0;
+
     for (const point of data) {
       value[i + 0] = point.position.x;
       value[i + 1] = point.position.y;
       value[i + 2] = point.position.z;
       value[i + 3] = point.radius || 1;
+
+      // var projected = this.project({lon: point.position.x, lat: point.position.y});
+      // value[i + 0] = projected.x;
+      // value[i + 1] = projected.y;
+
+
       i += size;
     }
+
+    console.log("calculateInstancePositions: ", value);
   }
 
   calculateInstanceColors(attribute) {
@@ -144,6 +162,20 @@ export default class ScatterplotLayer extends BaseLayer {
     const dy = pixel0.y - pixel1.y;
 
     this.state.radius = Math.max(Math.sqrt(dx * dx + dy * dy), 2.0);
+
+    function df64ify(a) {
+      const a_hi = new Float32Array([a])[0];
+      const a_lo = a - a_hi;
+      return [a_hi, a_lo];
+    }
+
+    function array_df64ify(in_array) {
+      return [in_array.map(f => df64ify(f)[0]), in_array.map(f => df64ify(f)[1])]
+    }
+
+
+    this.state.radius = df64ify(this.state.radius);
+
   }
 
 }

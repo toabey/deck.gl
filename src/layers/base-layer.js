@@ -465,6 +465,7 @@ export default class BaseLayer {
     assert(model);
     model.setAttributes(attributeManager.getAttributes());
     model.setUniforms(uniforms);
+
     // whether current layer responds to mouse events
     model.setPickable(this.props.isPickable);
   }
@@ -490,13 +491,22 @@ export default class BaseLayer {
       })
     });
 
+      function df64ify(a) {
+        const a_hi = new Float32Array([a])[0];
+        const a_lo = a - a_hi;
+        return [a_hi, a_lo];
+      }
+
     this.setUniforms({
       viewport: [0, 0, width, height],
-      mercatorScale: Math.pow(2, zoom),
+      mercatorScale: df64ify(Math.pow(2, zoom)),
       mercatorCenter: [longitude, latitude],
       disableMercatorProjector: disableMercatorProjector ? 1 : 0
     });
 
+
+    console.log("base-layer.js, setViewport. mercatorScale: ", Math.pow(2, zoom));
+    console.log("base-layer.js, setViewport. mercatorCenter: ", [longitude, latitude]);
     log(3, this.state.viewport, latitude, longitude, zoom);
   }
 

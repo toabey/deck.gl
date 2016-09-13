@@ -213,6 +213,8 @@ export default class WebGLRenderer extends React.Component {
     }
 
     this.props.onBeforeRenderFrame();
+    //console.log("in webgl-renderer.js, renderFrame(), camera.getUniforms()", camera.getUniforms());
+
     scene.render({camera});
     this.props.onAfterRenderFrame();
   }

@@ -130,6 +130,7 @@ export default class DeckGLOverlay extends React.Component {
     return layersNeedRedraw(layers, {clearRedrawFlags: true});
   }
 
+
   render() {
     const {
       width, height, layers, blending, pixelRatio,
@@ -146,17 +147,24 @@ export default class DeckGLOverlay extends React.Component {
       }
     }
 
-    // Create a "disposable" camera and overwrite matrices
+      // Create a "disposable" camera and overwrite matrices
     if (!camera) {
       const viewport = new Viewport({
         width, height, latitude, longitude, zoom, pitch, bearing, altitude
       });
+      //console.log("viewport:", viewport);
 
       camera = new PerspectiveCamera();
       camera.view = new Mat4().id();
+//      console.log("camera.projection before", camera.projection);
       convertToMat4(camera.projection, viewport.getProjectionMatrix());
-    }
+//      console.log("viewport.projection:", viewport.getProjectionMatrix());
+//      console.log("camera.projection after", camera.projection);
+      camera.updateHighPrecCamera();
+      // [camera.highPrecProjectionMatrix_hi, camera.highPrecProjectionMatrix_lo] = array_df64ify(camera.projection);
 
+      console.log("this.props.layers[0].props", this.props.layers[0].props);
+    }
     return (
       <WebGLRenderer
         { ...otherProps }

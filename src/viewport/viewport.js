@@ -188,7 +188,6 @@ export default class Viewport {
 
     // Move camera to altitude
     mat4.translate(m, m, [0, 0, -this.altitude]);
-
     // After the rotateX, z values are in pixel units. Convert them to
     // altitude units. 1 altitude unit = the screen height.
     mat4.scale(m, m, [1, -1, 1 / this.height]);
@@ -196,7 +195,6 @@ export default class Viewport {
     mat4.rotateX(m, m, this.pitchRadians);
     mat4.rotateZ(m, m, -this.bearingRadians);
     mat4.translate(m, m, [-this.centerX, -this.centerY, 0]);
-    // mat4.scale(m, m, [this.scale, this.scale, this.scale]);
 
     return m;
   }

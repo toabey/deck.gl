@@ -19,13 +19,25 @@ vec2 twoProd(float a, float b) {
   return vec2(prod, err);
 }
 
-vec2 div_f64(vec2 a, vec2 b) {
-  float xn = 1.0 / b.x;
-  // there is an error in Thall's paper, check the original one by Karp
-  vec2 yn = a * xn;
-  float diff = (sub_f64(a, mul_f64(b, yn))).x;
-  vec2 prod = twoProd(xn, diff);
-  return sum_f64(yn, prod);
+vec2 twoSqr(float a) {
+  float prod = a * a;
+  vec2 a_f64 = split(a);
+
+  float err = ((a_f64.x * a_f64.x - prod) + a_f64.x * a_f64.y + a_f64.x * a_f64.y) + a_f64.y * a_f64.y;
+  return vec2(prod, err);
 }
 
-#pragma glslify: export(div_f64)
+vec2 sqrt_f64(vec2 a) {
+
+  float xn = inversesqrt(a.x);
+  vec2 yn = a * xn;
+  vec2 yn_sqr = twoSqr(yn.x);
+
+  float diff = sub_f64(a, yn_sqr).x;
+  vec2 prod = twoProd(xn, diff) / 2.0;
+  return sum_f64(yn, prod);
+
+}
+
+
+#pragma glslify: export(sqrt_f64)
