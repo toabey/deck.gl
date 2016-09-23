@@ -1,0 +1,11 @@
+{
+  "presets": ["es2015", "react"],
+  "plugins": [
+  	"glslify",
+    "transform-decorators-legacy",
+    ["babel-plugin-transform-builtin-extend", {
+      "globals": ["Array"]
+    }]
+  ],
+  "compact": "false"
+}

@@ -1,0 +1,12 @@
+dist/*
+build/*
+.project
+.idea
+.DS_Store
+*.zip
+*.rar
+TODO
+_docs
+examples/winds/data/*.html
+node_modules
+npm-debug.log
