@@ -1,10 +1,14 @@
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
 import appReducer from './app';
-
-const APP_STATE = combineReducers({
-  appReducer
-});
+import contentsReducer from './contents';
+import viewportReducer from './viewport';
 
 export default createStore(
-  APP_STATE
+  combineReducers({
+    app: appReducer,
+    contents: contentsReducer,
+    viewport: viewportReducer
+  }),
+  applyMiddleware(thunk)
 );
