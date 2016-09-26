@@ -1,6 +1,6 @@
 export const MAPBOX_STYLES = 'mapbox://styles/mapbox/light-v9';
 
-export const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoidWJlcm1hcHNmb3J0aGV3ZWIiLCJhIjoiY2l0Z2N6OGRnMDBjbTJ0bWszM2c5amU3dCJ9.eP_60RE6PibMPHyzxrdmaw';
+export const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoidWJlcnZpc3B1YmxpYyIsImEiOiJjaXRrY3QxNnMwYWk4MnRtazYwODAxMXp5In0.tfzIQkC6mKPR7meww3nquw';
 
 export const DEFAULT_VIEWPORT_STATE = {
   width: 600,
