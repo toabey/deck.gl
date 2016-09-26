@@ -13,7 +13,7 @@ import AppState from './reducers';
 import pages from './constants/pages';
 
 function renderRoute(page, i) {
-  return <Route key={i} path={page.path} component={page.demo} page={page} />
+  return <Route key={i} path={page.path} components={page.components} />
 }
 
 const appHistory = useRouterHistory(createHashHistory)({ queryKey: false })
@@ -22,7 +22,7 @@ ReactDOM.render(
   <Provider store={AppState}>
     <Router history={appHistory}>
       <Route path="/" component={App}>
-        <IndexRoute component={pages[0].demo}  />
+        <IndexRoute components={pages[0].components} />
         { pages.map(renderRoute) }
       </Route>
     </Router>

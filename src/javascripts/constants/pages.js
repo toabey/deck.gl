@@ -1,17 +1,26 @@
 import React from 'react';
 
-import ScatterPlotDemo from '../components/demos/scatterplot';
+import ScatterplotDemo from '../components/demos/scatterplot';
+import MarkdownPage from '../components/markdown-page';
+
+function makeFromMarkdown(url) {
+  return () => <MarkdownPage url={url} />;
+}
 
 export default [
   {
     path: 'overview',
     displayName: 'Overview',
-    source: 'overview.md'
+    components: {
+      content: makeFromMarkdown('overview.md')
+    }
   },
   {
-    path: 'scatter_plot_layer',
-    displayName: 'ScatterPlotLayer',
-    demo: ScatterPlotDemo,
-    source: 'scatterplot.md'
+    path: 'scatterplot-layer',
+    displayName: 'ScatterplotLayer',
+    components: {
+      demo: ScatterplotDemo,
+      content: makeFromMarkdown('scatterplot.md')
+    }
   }
 ];

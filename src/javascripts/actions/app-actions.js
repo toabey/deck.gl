@@ -1,24 +1,24 @@
 import * as request from 'd3-request';
 
-export function loadStaticContent(filename) {
+export function loadContent(filename) {
   return (dispatch, getState) => {
     const {contents} = getState();
     if (filename in contents) {
       // already loaded
       return;
     }
-    dispatch(loadStaticContentStart(filename));
+    dispatch(loadContentStart(filename));
     request.text(`static/${filename}`, (error, response) => {
-      dispatch(loadStaticContentSuccess(filename, error ? error : response));
+      dispatch(loadContentSuccess(filename, error ? error : response));
     });
   }
 }
 
-function loadStaticContentStart(name) {
-  return loadStaticContentSuccess(name, '');
+function loadContentStart(name) {
+  return loadContentSuccess(name, '');
 }
 
-function loadStaticContentSuccess(name, content) {
+function loadContentSuccess(name, content) {
   const payload = {};
   payload[name] = content;
   return {type: 'LOAD_CONTENT', payload};

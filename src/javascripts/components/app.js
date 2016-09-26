@@ -5,44 +5,31 @@ import MapGL from 'react-map-gl';
 
 import Header from './header';
 import TableOfContents from './table-of-contents';
-import MarkdownPage from './markdown-page';
 import GenericInput from './input';
-import {updateMap, loadStaticContent, updateParam} from '../actions/app-actions';
+import {updateMap, updateParam} from '../actions/app-actions';
 import {MAPBOX_ACCESS_TOKEN, MAPBOX_STYLES} from '../constants/defaults';
 
 const DEMO_TAB = 0;
-const SOURCE_TAB = 1;
+const CONTENT_TAB = 1;
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       page: {},
-      tab: -1
+      tab: DEMO_TAB
     };
   }
 
   componentDidMount() {
     window.onresize = this._resizeMap.bind(this);
     this._resizeMap();
-    this._updateRoute(this.props.routes);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.routes !== nextProps.routes) {
-      this._updateRoute(nextProps.routes);
+      this.setState({tab: DEMO_TAB});
     }
-  }
-
-  _updateRoute(routes) {
-    const route = routes.slice(-1)[0];
-    const page = route.page || {};
-
-    this.setState({
-      page,
-      tab: page.demo ? DEMO_TAB : SOURCE_TAB
-    });
-    this.props.loadStaticContent(page.source);
   }
 
   _resizeMap() {
@@ -54,14 +41,6 @@ class App extends Component {
     });
   }
 
-  _renderMarkdown() {
-    const {contents} = this.props;
-    const {page: {source}} = this.state;
-    const content = contents[source];
-
-    return content && <MarkdownPage content={content} />;
-  }
-
   _renderMap() {
     const {children, viewport} = this.props;
     return (
@@ -71,7 +50,7 @@ class App extends Component {
         { ...viewport }
         onChangeViewport={ this.props.updateMap }>
 
-        { this.props.children }
+        { this.props.demo }
 
       </MapGL>
     )
@@ -93,15 +72,21 @@ class App extends Component {
   }
 
   _renderTabContent() {
-    const {tab, page} = this.state;
+    const {tab} = this.state;
+    const {content, demo} = this.props;
+
+    if (!demo) {
+      return content;
+    }
+
     return (
       <div>
         <div className={`tab ${tab === DEMO_TAB ? 'active' : ''}`}>
           { this._renderMap() }
           { this._renderOptions() }
         </div>
-        <div className={`tab ${tab === SOURCE_TAB ? 'active' : ''}`}>
-          { this._renderMarkdown() }
+        <div className={`tab ${tab === CONTENT_TAB ? 'active' : ''}`}>
+          { content }
         </div>
       </div>
     );
@@ -109,20 +94,19 @@ class App extends Component {
 
   _renderTabs() {
     const {tab, page} = this.state;
-    return page.demo && (
+    return (
       <ul className="tabs">
         <li className={`${tab === DEMO_TAB ? 'active' : ''}`}>
           <button onClick={ () => this.setState({tab: DEMO_TAB}) }>Demo</button>
         </li>
-        <li className={`${tab === DEMO_TAB ? 'active' : ''}`}>
-          <button onClick={ () => this.setState({tab: SOURCE_TAB}) }>Code</button>
+        <li className={`${tab === CONTENT_TAB ? 'active' : ''}`}>
+          <button onClick={ () => this.setState({tab: CONTENT_TAB}) }>Code</button>
         </li>
       </ul>
     );
   }
 
   render() {
-    const {page} = this.state;
     return (
       <div className="flexbox--column fullheight">
         <Header className="flexbox-item" />
@@ -131,8 +115,8 @@ class App extends Component {
             <div className="flexbox-item">
               <TableOfContents />
             </div>
-            <div className={`flexbox-item--fill ${page.demo ? 'demo' : '' }`}>
-              { this._renderTabs() }
+            <div className={`flexbox-item--fill`}>
+              { this.props.demo && this._renderTabs() }
               { this._renderTabContent() }
             </div>
           </div>
@@ -145,14 +129,12 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     params: state.app.params,
-    viewport: state.viewport,
-    contents: state.contents
+    viewport: state.viewport
   };
 }
 
 const mapDispatchToProps = {
   updateMap,
-  loadStaticContent,
   updateParam
 };
 

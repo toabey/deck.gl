@@ -24,7 +24,7 @@ a {
   line-height: 1em;
   border-bottom: solid 0 #108188;
 }
-a:focus {
+a:active, a.active {
   color: #108188;
   font-weight: bold;
 }
@@ -96,13 +96,17 @@ button:focus, input:focus {
   display: inline;
   margin-left: -1px;
 }
+.tabs li.active button {
+  color: #000;
+}
 .tabs button {
+  color: #aaa;
   background: #fff;
   padding: 4px 8px;
   border: solid 1px #ccc;
   cursor: pointer;
 }
-.tabs button:hover {
+.tabs li:not(.active) button:hover {
   background: #222;
   color: #fff;
   border-color: #000;
@@ -117,7 +121,7 @@ button:focus, input:focus {
 .markdown {
   padding: 24px 12px;
 }
-.demo .tab .markdown {
+.tab .markdown {
   padding-top: 72px;
 }
 .options-panel {
