@@ -12,7 +12,7 @@ export default [
     path: 'overview',
     displayName: 'Overview',
     components: {
-      content: makeFromMarkdown('overview.md')
+      content: makeFromMarkdown('static/overview.md')
     }
   },
   {
@@ -20,7 +20,14 @@ export default [
     displayName: 'ScatterplotLayer',
     components: {
       demo: ScatterplotDemo,
-      content: makeFromMarkdown('scatterplot.md')
+      content: makeFromMarkdown('static/scatterplot.md')
+    }
+  },
+  {
+    path: 'performance',
+    displayName: 'Performance',
+    components: {
+      content: makeFromMarkdown('https://raw.githubusercontent.com/uber/deck.gl/dev/docs/performance.md')
     }
   }
 ];

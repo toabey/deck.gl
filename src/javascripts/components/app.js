@@ -108,9 +108,9 @@ class App extends Component {
 
   render() {
     return (
-      <div className="flexbox--column fullheight">
-        <Header className="flexbox-item" />
-        <div className="container flexbox-item--fill">
+      <div>
+        <Header />
+        <div className="container app-wrapper">
           <div className="flexbox--row">
             <div className="flexbox-item">
               <TableOfContents />

@@ -18,9 +18,11 @@ export default class TableOfContents extends Component {
 
   render() {
     return (
-      <ul className="toc">
-        { pages.map(this._renderLink) }
-      </ul>
+      <div className="toc">
+        <ul>
+          { pages.map(this._renderLink) }
+        </ul>
+      </div>
     )
   }
 }

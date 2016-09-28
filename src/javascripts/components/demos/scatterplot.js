@@ -3,52 +3,48 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {DeckGLOverlay, ScatterplotLayer} from 'deck.gl';
 
-import {loadData, useParams} from '../../actions/app-actions';
+import {loadData, useParams, updateMap} from '../../actions/app-actions';
 
 class ScatterPlotDemo extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: []
-    };
-  }
 
-  componentWillMount() {
-
-    this.props.loadData(this, 'csv', 'static/sf-traffic-accidents-2016-09.csv');
+  componentDidMount() {
+    this.props.loadData(this, {
+      type: 'text',
+      url: 'static/scatterplot-data',
+      worker: 'static/scatterplot-data-decoder.js'
+    });
     this.props.useParams({
-      color: {type: 'color', value: '#f00'},
-      radius: {type: 'number', value: 2}
+      colorM: {name: 'Male', type: 'color', value: '#08f'},
+      colorF: {name: 'Female', type: 'color', value: '#f08'},
+      radius: {name: 'Radius', type: 'number', value: 0.2, step: 0.1}
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.data !== this.props.data ||
-        nextProps.params !== this.props.params) {
-      this._updateData(nextProps);
+    if (nextProps.data !== this.props.data) {
+      this.props.updateMap({longitude: -74, latitude: 40.7, zoom: 11});
+      console.log('Point count: ' + nextProps.data.length);
     }
-  }
-
-  _updateData(props) {
-    const {data, params} = props;
-    let scatterPlotData = [];
-    if (data) {
-      scatterPlotData = data.map(d => ({
-        position: {x: Number(d.X), y: Number(d.Y), z: 0},
-        color: params.color.value,
-        radius: params.radius.value
-      }));
-    }
-    this.setState({data: scatterPlotData});
   }
 
   render() {
-    const {viewport} = this.props;
+    const {viewport, params, data} = this.props;
+
+    if (!data) {
+      return null;
+    }
 
     const layer = new ScatterplotLayer({
       id: 'scatter-plot',
-      ...this.props.viewport,
-      data: this.state.data,
+      ...viewport,
+      data: data,
+      getPosition: d => [d[0], d[1], 0],
+      getColor: d => d[2] === 1 ? params.colorM.value : params.colorF.value,
+      getRadius: d => params.radius.value,
+      updateTriggers: {
+        instanceColors: {c1: params.colorM.value, c2: params.colorF.value},
+        instancePositions: {radius: params.radius.value}
+      },
       isPickable: true
     });
 
@@ -66,6 +62,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
+  updateMap,
   loadData,
   useParams
 };

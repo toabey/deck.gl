@@ -1,4 +1,5 @@
 import * as request from 'd3-request';
+import {parseDataWithWorker} from '../utils/worker-utils';
 
 export function loadContent(filename) {
   return (dispatch, getState) => {
@@ -8,7 +9,7 @@ export function loadContent(filename) {
       return;
     }
     dispatch(loadContentStart(filename));
-    request.text(`static/${filename}`, (error, response) => {
+    request.text(filename, (error, response) => {
       dispatch(loadContentSuccess(filename, error ? error : response));
     });
   }
@@ -28,7 +29,7 @@ export function updateMap(viewport) {
   return {type: 'UPDATE_MAP', viewport};
 }
 
-export function loadData(source, type, url) {
+export function loadData(source, {type, url, worker}) {
   const owner = source.constructor.name;
 
   return dispatch => {
@@ -36,7 +37,13 @@ export function loadData(source, type, url) {
     if (request[type]) {
       request[type](url, (error, response) => {
         if (!error) {
-          dispatch(loadDataSuccess(owner, response));
+          if (worker) {
+            parseDataWithWorker(worker, response, data => {
+              dispatch(loadDataSuccess(owner, data));
+            });
+          } else {
+            dispatch(loadDataSuccess(owner, response));
+          }
         }
       });
     }

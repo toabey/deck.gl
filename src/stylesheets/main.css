@@ -3,15 +3,21 @@
   margin: 0;
   font-size: 12px;
   font-family: ff-clan-web-pro, "Helvetica Neue", Helvetica, sans-serif!important;
+  box-sizing: border-box;
+}
+.app-wrapper {
+  position: relative;
+  padding-top: 64px;
 }
 header {
   background: #fff;
-  height: 64px;
   position: relative;
   z-index: 99;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-  line-height: 32px;
   line-height: 64px;
+  position: fixed;
+  width: 100%;
+  height: 64px;
 }
 header .links {
   float: right;
@@ -62,15 +68,20 @@ button:focus, input:focus {
 }
 .flexbox-item {
   position: relative;
-  flex: 0 1 auto;
+  flex: 0 0 auto;
 }
 .flexbox-item--fill {
   position: relative;
   flex: 1 1 auto;
 }
 .toc {
-  padding: 24px;
   width: 240px;
+}
+.toc ul {
+  padding: 24px;
+  position: fixed;
+  top: 64px;
+  width: 100%;
   list-style: none;
 }
 .toc li {
@@ -82,6 +93,10 @@ button:focus, input:focus {
   }
   .toc {
     width: 100%;
+  }
+  .toc ul {
+    background: white;
+    z-index: 98;
   }
 }
 .tabs {
@@ -113,7 +128,6 @@ button:focus, input:focus {
 }
 .tab {
   display: none;
-  overflow-y: auto;
 }
 .tab.active {
   display: block;
@@ -148,15 +162,6 @@ button:focus, input:focus {
   height: 20px;
   border: solid 1px #ccc;
 }
-/* code highlighting */
-code { font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace !important;}
-code .c { color: #969896; font-style: italic } /* Comment */
-code .d { color: #969896; font-style: italic } /* JSDoc */
-code .k { color: #ed6a43; font-weight: bold } /* Keyword */
-code .v { color: #0086b3 } /* Number */
-code .s { color: #183691 } /* String */
-code .i { color: #a71d5d } /* Template interpolation */
-code .r { color: #009926 } /* Regex */
-code .o { color: #a71d5d; font-weight: bold } /* Operator */
-code .p { color: #a71d5d; } /* Punctual symbol */
-code .f { color: #795da3; font-weight: bold } /* Function */
+code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace !important;
+}
