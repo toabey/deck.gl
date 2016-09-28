@@ -14,9 +14,9 @@ class ScatterPlotDemo extends Component {
       worker: 'static/scatterplot-data-decoder.js'
     });
     this.props.useParams({
-      colorM: {name: 'Male', type: 'color', value: '#08f'},
-      colorF: {name: 'Female', type: 'color', value: '#f08'},
-      radius: {name: 'Radius', type: 'number', value: 0.2, step: 0.1}
+      colorM: {displayName: 'Male', type: 'color', value: '#08f'},
+      colorF: {displayName: 'Female', type: 'color', value: '#f08'},
+      radius: {displayName: 'Radius', type: 'number', value: 0.2, step: 0.1, min: 0.1}
     });
   }
 
