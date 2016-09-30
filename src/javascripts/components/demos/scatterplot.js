@@ -10,7 +10,7 @@ class ScatterPlotDemo extends Component {
   componentDidMount() {
     this.props.loadData(this, {
       type: 'text',
-      url: 'static/scatterplot-data',
+      url: 'static/scatterplot-data.txt',
       worker: 'static/scatterplot-data-decoder.js'
     });
     this.props.useParams({
@@ -21,16 +21,17 @@ class ScatterPlotDemo extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.data !== this.props.data) {
+    const {data} = nextProps;
+    if (data && data !== this.props.data) {
       this.props.updateMap({longitude: -74, latitude: 40.7, zoom: 11});
-      console.log('Point count: ' + nextProps.data.length);
+      console.log('Point count: ' + data.length);
     }
   }
 
   render() {
-    const {viewport, params, data} = this.props;
+    const {viewport, params, data, owner} = this.props;
 
-    if (!data) {
+    if (!data || owner !== this.constructor.name) {
       return null;
     }
 

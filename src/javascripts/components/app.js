@@ -47,6 +47,7 @@ class App extends Component {
       <MapGL
         mapStyle={MAPBOX_STYLES}
         mapboxApiAccessToken={MAPBOX_ACCESS_TOKEN}
+        perspectiveEnabled={true}
         { ...viewport }
         onChangeViewport={ this.props.updateMap }>
 

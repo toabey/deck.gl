@@ -1,7 +1,5 @@
 var FLUSH_LIMIT = 100000;
 var COORDINATE_PRECISION = 7;
-var BASE = 90;
-var SHIFT = 32;
 
 onmessage = function(e) {
   var sequence;
@@ -58,17 +56,16 @@ function decodeSequence(str) {
 
 function decodeBbox(str) {
   var multiplyer = Math.pow(10, COORDINATE_PRECISION);
-  var bbox = decodeBase(str, BASE, SHIFT, 5).map(function(x) {
+  return decodeBase(str, 90, 32, 5).map(function(x) {
     return x / multiplyer - 180;
   });
-  return bbox;
 }
 
 function decodeBitmap(str) {
   var chunkSize = 4;
   var match = '';
   for (var i = 0; i < str.length; i++) {
-    var seg = (str.charCodeAt(i) - SHIFT).toString(3);
+    var seg = (str.charCodeAt(i) - 32).toString(3);
     while (seg.length < chunkSize) {
       seg = '0' + seg;
     }

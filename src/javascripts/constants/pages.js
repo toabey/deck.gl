@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ScatterplotDemo from '../components/demos/scatterplot';
+import ArcDemo from '../components/demos/arc';
 import MarkdownPage from '../components/markdown-page';
 
 function makeFromMarkdown(url) {
@@ -20,6 +21,14 @@ export default [
     displayName: 'ScatterplotLayer',
     components: {
       demo: ScatterplotDemo,
+      content: makeFromMarkdown('static/scatterplot.md')
+    }
+  },
+  {
+    path: 'arc-layer',
+    displayName: 'ArcLayer',
+    components: {
+      demo: ArcDemo,
       content: makeFromMarkdown('static/scatterplot.md')
     }
   },
