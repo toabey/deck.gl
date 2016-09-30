@@ -6,7 +6,7 @@ import {scaleQuantile} from 'd3-scale';
 
 import {loadData, useParams, updateMap} from '../../actions/app-actions';
 
-const arcColors = [
+const inFlowColors = [
   [255, 255, 204],
   [199, 233, 180],
   [127, 205, 187],
@@ -14,6 +14,16 @@ const arcColors = [
   [29, 145, 192],
   [34, 94, 168],
   [12, 44, 132],
+];
+
+const outFlowColors = [
+  [255,255,178],
+  [254,217,118],
+  [254,178,76],
+  [253,141,60],
+  [252,78,42],
+  [227,26,28],
+  [177,0,38],
 ];
 
 class ArcDemo extends Component {
@@ -45,7 +55,7 @@ class ArcDemo extends Component {
   _computeQuantile(data) {
     const scale = scaleQuantile()
       .domain(data.map(d => d.weight))
-      .range(arcColors.map((c, i) => i));
+      .range(inFlowColors.map((c, i) => i));
     this.setState({scale});
   }
 
@@ -68,10 +78,11 @@ class ArcDemo extends Component {
       data: data,
       getSourcePosition: d => d.source,
       getTargetPosition: d => d.target,
-      getColor: d => arcColors[scale(d.weight)],
+      getSourceColor: d => inFlowColors[scale(d.weight)],
+      getTargetColor: d => outFlowColors[scale(d.weight)],
       strokeWidth: params.lineWidth.value,
       updateTriggers: {
-        instanceColors: {color: params.lineWidth.value}
+        // instanceColors: {color: params.lineWidth.value}
       },
       isPickable: true
     });

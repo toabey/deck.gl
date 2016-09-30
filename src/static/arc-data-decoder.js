@@ -26,7 +26,7 @@ onmessage = function(e) {
     nodes.forEach(function(n) {
 
       for (var index in n.links) {
-        if (n.links[index] > 1000) {
+        if (n.links[index] > 400) {
           result[count++] = {
             source: nodes[index * 1].coords,
             target: n.coords,
