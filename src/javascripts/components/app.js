@@ -45,7 +45,6 @@ class App extends Component {
     const {children, viewport} = this.props;
     return (
       <MapGL
-        mapStyle={MAPBOX_STYLES}
         mapboxApiAccessToken={MAPBOX_ACCESS_TOKEN}
         perspectiveEnabled={true}
         { ...viewport }
