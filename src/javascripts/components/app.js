@@ -109,6 +109,9 @@ class App extends Component {
   render() {
     return (
       <div>
+        <style>
+          {require('../../stylesheets/main.scss')}
+        </style>
         <Header />
         <div className="container app-wrapper">
           <div className="flexbox--row">
