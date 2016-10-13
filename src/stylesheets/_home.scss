@@ -27,6 +27,9 @@
   section {
     padding: 72px 64px;
   }
+  .container {
+    padding: 0 24px;
+  }
 }
 .home-wrapper.top {
   header {
@@ -50,7 +53,7 @@
     background: rgba(0, 173, 230, 0.1);
     width: 214px;
     height: 52px;
-    margin-top: 56px;
+    margin: 56px 0;
     transition: background 500ms;
   }
   button:hover {

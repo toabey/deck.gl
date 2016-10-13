@@ -17,6 +17,7 @@ body {
   font-family: ff-clan-web-pro, "Helvetica Neue", Helvetica, sans-serif!important;
   font-size: 12px;
   line-height: 1.5;
+  overflow-y: auto;
 }
 
 * {
@@ -78,7 +79,6 @@ button:focus, input:focus {
   outline: none;
 }
 .container {
-  padding: 0 24px;
   margin: 0 auto;
   max-width: 1280px;
   width: 100%;
@@ -111,12 +111,10 @@ hr.short {
 .flexbox-item {
   position: relative;
   flex: 0 0 auto;
-  overflow-y: auto;
 }
 .flexbox-item--fill {
   position: relative;
   flex: 1 1 auto;
-  overflow-y: auto;
 }
 .text-center {
   text-align: center;

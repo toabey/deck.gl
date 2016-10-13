@@ -116,8 +116,8 @@ class Gallery extends Component {
       <div className="gallery-wrapper">
         <style>{ stylesheet }</style>
         <Header />
-        <div className="container fullheight">
-          <div className="flexbox--row fullheight">
+        <div className="container">
+          <div className="flexbox--row">
             <div className="flexbox-item">
               <TableOfContents />
             </div>

@@ -10,12 +10,65 @@ function makeFromMarkdown(url) {
   return () => <MarkdownPage url={url} />;
 }
 
+function getGithubUrl(filename) {
+  return `https://raw.githubusercontent.com/uber/deck.gl/dev/docs/${filename}`
+}
+
 export default [
   {
     path: 'overview',
+    groupName: 'Overview',
     displayName: 'Overview',
     components: {
       content: makeFromMarkdown('static/overview.md')
+    }
+  },
+  {
+    path: 'layer-class',
+    groupName: 'Overview',
+    displayName: 'Layer Class',
+    components: {
+      content: makeFromMarkdown(getGithubUrl('layer.md'))
+    }
+  },
+  {
+    path: 'using-layers',
+    groupName: 'Overview',
+    displayName: 'Using Layers',
+    components: {
+      content: makeFromMarkdown(getGithubUrl('using-layers.md'))
+    }
+  },
+  {
+    path: 'react-integration',
+    groupName: 'Overview',
+    displayName: 'React Integration',
+    components: {
+      content: makeFromMarkdown(getGithubUrl('react-integration.md'))
+    }
+  },
+  {
+    path: 'using-with-react',
+    groupName: 'Overview',
+    displayName: 'Using With React',
+    components: {
+      content: makeFromMarkdown(getGithubUrl('using-with-react.md'))
+    }
+  },
+  {
+    path: 'coordinate-systems',
+    groupName: 'Overview',
+    displayName: 'Coordinate Systems',
+    components: {
+      content: makeFromMarkdown(getGithubUrl('viewport.md'))
+    }
+  },
+  {
+    path: 'core-layers',
+    groupName: 'Core layers',
+    displayName: 'Core Layers',
+    components: {
+      content: makeFromMarkdown(getGithubUrl('core-layers.md'))
     }
   },
   {
@@ -42,7 +95,7 @@ export default [
     displayName: 'ChoroplethLayer',
     components: {
       demo: ChoroplethDemo,
-      content: makeFromMarkdown('static/scatterplot.md')
+      content: makeFromMarkdown(getGithubUrl('choropleth.md'))
     }
   },
   {
@@ -55,11 +108,35 @@ export default [
     }
   },
   {
+    path: 'sample-layers',
+    groupName: 'Sample layers',
+    displayName: 'Sample Layers',
+    components: {
+      content: makeFromMarkdown(getGithubUrl('sample-layers.md'))
+    }
+  },
+  {
+    path: 'custom-layers',
+    groupName: 'Advanced Topics',
+    displayName: 'Custom Layers',
+    components: {
+      content: makeFromMarkdown(getGithubUrl('custom-layers.md'))
+    }
+  },
+  {
+    path: 'tips-and-tricks',
+    groupName: 'Advanced Topics',
+    displayName: 'Tips and Tricks',
+    components: {
+      content: makeFromMarkdown(getGithubUrl('tips-and-tricks.md'))
+    }
+  },
+  {
     path: 'performance',
     groupName: 'Advanced Topics',
     displayName: 'Performance',
     components: {
-      content: makeFromMarkdown('https://raw.githubusercontent.com/uber/deck.gl/dev/docs/performance.md')
+      content: makeFromMarkdown(getGithubUrl('performance.md'))
     }
   }
 ];
