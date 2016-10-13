@@ -1,8 +1,7 @@
 import 'babel-polyfill';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {DeckGLOverlay} from 'deck.gl';
-import {ChoroplethLayer} from '../../../../../deck.gl/src';
+import {DeckGLOverlay, ChoroplethLayer} from 'deck.gl';
 import {scaleQuantile} from 'd3-scale';
 
 import {MAPBOX_STYLES} from '../../constants/defaults';

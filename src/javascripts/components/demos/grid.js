@@ -1,8 +1,7 @@
 import 'babel-polyfill';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {DeckGLOverlay} from 'deck.gl';
-import {GridLayer} from '../../../../../deck.gl/src';
+import {DeckGLOverlay, GridLayer} from 'deck.gl';
 
 import {MAPBOX_STYLES} from '../../constants/defaults';
 import {loadData, useParams, updateMap} from '../../actions/app-actions';
