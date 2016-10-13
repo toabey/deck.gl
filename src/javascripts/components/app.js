@@ -59,6 +59,10 @@ class App extends Component {
   _renderOptions() {
     const {params} = this.props;
 
+    if (Object.keys(params).length === 0) {
+      return null;
+    }
+
     return (
       <div className="options-panel">
         {

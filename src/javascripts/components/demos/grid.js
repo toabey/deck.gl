@@ -1,7 +1,8 @@
 import 'babel-polyfill';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {DeckGLOverlay, GridLayer} from 'deck.gl';
+import {DeckGLOverlay} from 'deck.gl';
+import {GridLayer} from '../../../../../deck.gl/src';
 
 import {loadData, useParams, updateMap} from '../../actions/app-actions';
 
@@ -14,7 +15,7 @@ class GridDemo extends Component {
       worker: 'static/grid-data-decoder.js'
     });
     this.props.useParams({
-      cellSize: {displayName: 'Cell Size', type: 'number', value: 100, step: 10, min: 10}
+      cellSize: {displayName: 'Cell Size', type: 'number', value: 10, step: 5, min: 10}
     });
   }
 

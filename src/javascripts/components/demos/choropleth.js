@@ -1,7 +1,8 @@
 import 'babel-polyfill';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {DeckGLOverlay, ChoroplethLayer} from 'deck.gl';
+import {DeckGLOverlay} from 'deck.gl';
+import {ChoroplethLayer} from '../../../../../deck.gl/src';
 import {scaleQuantile} from 'd3-scale';
 
 import {loadData, useParams, updateMap} from '../../actions/app-actions';
@@ -35,28 +36,39 @@ class ChoroplethDemo extends Component {
   componentDidMount() {
     this.props.loadData(this, {
       type: 'text',
-      url: 'static/arc-data.txt',
-      worker: 'static/arc-data-decoder.js'
+      url: 'static/choropleth-data.json',
+      worker: 'static/choropleth-data-decoder.js'
     });
-    this.props.useParams({
-      lineWidth: {displayName: 'Width', type: 'number', value: 1, step: 1, min: 1}
-    });
+    this.props.useParams({});
   }
 
   componentWillReceiveProps(nextProps) {
     const {data} = nextProps;
     if (data && data !== this.props.data) {
       this.props.updateMap({longitude: -100, latitude: 40.7, zoom: 3});
-      this._computeQuantile(data);
-      console.log('Arc count: ' + data.length);
+      const scale = this._computeQuantile(data, null);
+      this.setState({scale});
+      console.log('Choropleth count: ' + data[0].features.length);
     }
   }
 
-  _computeQuantile(data) {
+  _computeQuantile(data, hoveredFeature) {
+    if (!data || !data.length) {
+      return;
+    }
+
+    const values = data[0].features.map((f, i) => {
+      const value = hoveredFeature ? -hoveredFeature.properties.flows[i] :
+        f.properties.netFlow;
+      f.properties.value = value;
+      return Math.abs(value);
+    });
+
     const scale = scaleQuantile()
-      .domain(data.map(d => d.weight))
+      .domain(values)
       .range(inFlowColors.map((c, i) => i));
-    this.setState({scale});
+
+    return scale;
   }
 
   _initialize(gl) {
@@ -64,26 +76,45 @@ class ChoroplethDemo extends Component {
     gl.depthFunc(gl.LEQUAL);
   }
 
+  _onHoverFeature(evt) {
+    const {data} = this.props;
+    const {feature} = evt;
+
+    if (this.state.hoveredFeature === feature) {
+      return;
+    }
+
+    this.setState({
+      hoveredFeature: feature,
+      scale: this._computeQuantile(data, feature)
+    });
+  }
+
   render() {
     const {viewport, params, data, owner} = this.props;
-    const {scale} = this.state;
+    const {scale, hoveredFeature} = this.state;
 
     if (!data || owner !== this.constructor.name) {
       return null;
     }
 
-    const layer = new ArcLayer({
-      id: 'arc',
+    const layer = new ChoroplethLayer({
+      id: 'choropleth',
       ...viewport,
-      data: data,
-      getSourcePosition: d => d.source,
-      getTargetPosition: d => d.target,
-      getSourceColor: d => inFlowColors[scale(d.weight)],
-      getTargetColor: d => outFlowColors[scale(d.weight)],
-      strokeWidth: params.lineWidth.value,
-      updateTriggers: {
-        // instanceColors: {color: params.lineWidth.value}
+      data: data[0],
+      getColor: f => {
+        if (f === hoveredFeature) {
+          return [255, 255, 255];
+        }
+
+        const {value} = f.properties;
+        const q = isNaN(value) ? 0 : scale(Math.abs(value));
+        return value > 0 ? inFlowColors[q] : outFlowColors[q];
       },
+      updateTriggers: {
+        colors: hoveredFeature
+      },
+      onHover: this._onHoverFeature.bind(this),
       isPickable: true
     });
 
