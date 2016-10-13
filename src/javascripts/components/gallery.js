@@ -37,7 +37,7 @@ class Gallery extends Component {
     const w = window.innerWidth;
     const h = window.innerHeight;
     this.props.updateMap({
-      width: w <= 768 ? w : w * 0.8,
+      width: w <= 768 ? w : w - 240,
       height: h - 64
     });
   }
@@ -112,17 +112,19 @@ class Gallery extends Component {
   }
 
   render() {
+    const {route, demo} = this.props;
+
     return (
       <div className="gallery-wrapper">
         <style>{ stylesheet }</style>
         <Header />
-        <div className="container">
+        <div className="fullheight">
           <div className="flexbox--row">
             <div className="flexbox-item">
-              <TableOfContents />
+              <TableOfContents parentRoute={route.path} pages={route.pages} />
             </div>
-            <div className={`flexbox-item--fill`}>
-              { this.props.demo && this._renderTabs() }
+            <div className={`flexbox-item flexbox-item--fill`}>
+              { demo && this._renderTabs() }
               { this._renderTabContent() }
             </div>
           </div>

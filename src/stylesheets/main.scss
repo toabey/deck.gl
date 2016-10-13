@@ -79,6 +79,7 @@ button:focus, input:focus {
   outline: none;
 }
 .container {
+  padding: 0 24px;
   margin: 0 auto;
   max-width: 1280px;
   width: 100%;
@@ -103,18 +104,16 @@ hr.short {
 .flexbox--row {
   display: flex;
   flex-direction: row;
-}
-.flexbox--column {
-  display: flex;
-  flex-direction: column;
-}
-.flexbox-item {
-  position: relative;
-  flex: 0 0 auto;
-}
-.flexbox-item--fill {
-  position: relative;
-  flex: 1 1 auto;
+  height: 100%;
+
+  .flexbox-item {
+    position: relative;
+    flex: 0 0 auto;
+    height: 100%;
+  }
+  .flexbox-item--fill {
+    flex: 1 1 auto;
+  }
 }
 .text-center {
   text-align: center;

@@ -14,63 +14,7 @@ function getGithubUrl(filename) {
   return `https://raw.githubusercontent.com/uber/deck.gl/dev/docs/${filename}`
 }
 
-export default [
-  {
-    path: 'overview',
-    groupName: 'Overview',
-    displayName: 'Overview',
-    components: {
-      content: makeFromMarkdown('static/overview.md')
-    }
-  },
-  {
-    path: 'layer-class',
-    groupName: 'Overview',
-    displayName: 'Layer Class',
-    components: {
-      content: makeFromMarkdown(getGithubUrl('layer.md'))
-    }
-  },
-  {
-    path: 'using-layers',
-    groupName: 'Overview',
-    displayName: 'Using Layers',
-    components: {
-      content: makeFromMarkdown(getGithubUrl('using-layers.md'))
-    }
-  },
-  {
-    path: 'react-integration',
-    groupName: 'Overview',
-    displayName: 'React Integration',
-    components: {
-      content: makeFromMarkdown(getGithubUrl('react-integration.md'))
-    }
-  },
-  {
-    path: 'using-with-react',
-    groupName: 'Overview',
-    displayName: 'Using With React',
-    components: {
-      content: makeFromMarkdown(getGithubUrl('using-with-react.md'))
-    }
-  },
-  {
-    path: 'coordinate-systems',
-    groupName: 'Overview',
-    displayName: 'Coordinate Systems',
-    components: {
-      content: makeFromMarkdown(getGithubUrl('viewport.md'))
-    }
-  },
-  {
-    path: 'core-layers',
-    groupName: 'Core layers',
-    displayName: 'Core Layers',
-    components: {
-      content: makeFromMarkdown(getGithubUrl('core-layers.md'))
-    }
-  },
+export const examplePages = [
   {
     path: 'scatterplot-layer',
     groupName: 'Core layers',
@@ -106,10 +50,69 @@ export default [
       demo: GridDemo,
       content: makeFromMarkdown('static/scatterplot.md')
     }
+  }
+];
+
+export const docPages = [
+  {
+    path: 'overview',
+    groupName: 'Overview',
+    displayName: 'Overview',
+    components: {
+      content: makeFromMarkdown('static/overview.md')
+    }
+  },
+  {
+    path: 'react-integration',
+    groupName: 'Overview',
+    displayName: 'React Integration',
+    components: {
+      content: makeFromMarkdown(getGithubUrl('react-integration.md'))
+    }
+  },
+  {
+    path: 'using-with-react',
+    groupName: 'Overview',
+    displayName: 'Using With React',
+    components: {
+      content: makeFromMarkdown(getGithubUrl('using-with-react.md'))
+    }
+  },
+  {
+    path: 'coordinate-systems',
+    groupName: 'Overview',
+    displayName: 'Coordinate Systems',
+    components: {
+      content: makeFromMarkdown(getGithubUrl('viewport.md'))
+    }
+  },
+  {
+    path: 'layer-class',
+    groupName: 'Layers',
+    displayName: 'Layer Class',
+    components: {
+      content: makeFromMarkdown(getGithubUrl('layer.md'))
+    }
+  },
+  {
+    path: 'using-layers',
+    groupName: 'Layers',
+    displayName: 'Using Layers',
+    components: {
+      content: makeFromMarkdown(getGithubUrl('using-layers.md'))
+    }
+  },
+  {
+    path: 'core-layers',
+    groupName: 'Layers',
+    displayName: 'Core Layers',
+    components: {
+      content: makeFromMarkdown(getGithubUrl('core-layers.md'))
+    }
   },
   {
     path: 'sample-layers',
-    groupName: 'Sample layers',
+    groupName: 'Layers',
     displayName: 'Sample Layers',
     components: {
       content: makeFromMarkdown(getGithubUrl('sample-layers.md'))
@@ -117,7 +120,7 @@ export default [
   },
   {
     path: 'custom-layers',
-    groupName: 'Advanced Topics',
+    groupName: 'Layers',
     displayName: 'Custom Layers',
     components: {
       content: makeFromMarkdown(getGithubUrl('custom-layers.md'))

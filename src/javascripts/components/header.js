@@ -10,8 +10,8 @@ export default class Header extends Component {
         <div className="container">
           <div className="links">
             <a href="https://github.com/uber/deck.gl/">Github</a>
-            <Link activeClassName="active" to="gallery">Gallery</Link>
-            <Link activeClassName="active" to="docs">Documentation</Link>
+            <Link activeClassName="active" to="examples">Examples</Link>
+            <Link activeClassName="active" to="documentation">Documentation</Link>
           </div>
           <a className="logo" href="/">deck.gl</a>
         </div>
