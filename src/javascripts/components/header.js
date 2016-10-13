@@ -1,5 +1,6 @@
 import 'babel-polyfill';
 import React, {Component} from 'react';
+import {Link} from 'react-router'
 
 export default class Header extends Component {
 
@@ -8,14 +9,11 @@ export default class Header extends Component {
       <header>
         <div className="container">
           <div className="links">
-            <a className="github-button" href="https://github.com/uber/deck.gl/fork"
-                data-icon="octicon-repo-forked" data-style="default"
-                data-count-href="/uber/deck.gl/network"
-                data-count-api="/repos/uber/deck.gl#forks_count"
-                data-count-aria-label="# forks on GitHub"
-                aria-label="Fork uber/deck.gl on GitHub">Fork</a>
+            <a href="https://github.com/uber/deck.gl/">Github</a>
+            <Link activeClassName="active" to="gallery">Gallery</Link>
+            <Link activeClassName="active" to="docs">Documentation</Link>
           </div>
-          <span id="logo">deck.gl</span>
+          <a className="logo" href="/">deck.gl</a>
         </div>
       </header>
     )

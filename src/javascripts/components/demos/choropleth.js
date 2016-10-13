@@ -5,6 +5,7 @@ import {DeckGLOverlay} from 'deck.gl';
 import {ChoroplethLayer} from '../../../../../deck.gl/src';
 import {scaleQuantile} from 'd3-scale';
 
+import {MAPBOX_STYLES} from '../../constants/defaults';
 import {loadData, useParams, updateMap} from '../../actions/app-actions';
 
 const inFlowColors = [
@@ -40,12 +41,16 @@ class ChoroplethDemo extends Component {
       worker: 'static/choropleth-data-decoder.js'
     });
     this.props.useParams({});
+    this.props.updateMap({
+      mapStyle: MAPBOX_STYLES.LIGHT,
+      longitude: -100, latitude: 40.7,
+      zoom: 3, pitch: 0, bearing: 0
+    });
   }
 
   componentWillReceiveProps(nextProps) {
     const {data} = nextProps;
     if (data && data !== this.props.data) {
-      this.props.updateMap({longitude: -100, latitude: 40.7, zoom: 3});
       const scale = this._computeQuantile(data, null);
       this.setState({scale});
       console.log('Choropleth count: ' + data[0].features.length);

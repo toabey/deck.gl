@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {DeckGLOverlay, ScatterplotLayer} from 'deck.gl';
 
+import {MAPBOX_STYLES} from '../../constants/defaults';
 import {loadData, useParams, updateMap} from '../../actions/app-actions';
 
 class ScatterPlotDemo extends Component {
@@ -18,12 +19,16 @@ class ScatterPlotDemo extends Component {
       colorF: {displayName: 'Female', type: 'color', value: '#f08'},
       radius: {displayName: 'Radius', type: 'number', value: 0.2, step: 0.1, min: 0.1}
     });
+    this.props.updateMap({
+      mapStyle: MAPBOX_STYLES.LIGHT,
+      longitude: -74, latitude: 40.7,
+      zoom: 11, pitch: 0, bearing: 0
+    });
   }
 
   componentWillReceiveProps(nextProps) {
     const {data} = nextProps;
     if (data && data !== this.props.data) {
-      this.props.updateMap({longitude: -74, latitude: 40.7, zoom: 11});
       console.log('Point count: ' + data.length);
     }
   }

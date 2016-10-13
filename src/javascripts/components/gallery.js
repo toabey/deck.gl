@@ -8,11 +8,12 @@ import TableOfContents from './table-of-contents';
 import GenericInput from './input';
 import {updateMap, updateParam} from '../actions/app-actions';
 import {MAPBOX_ACCESS_TOKEN, MAPBOX_STYLES} from '../constants/defaults';
+import stylesheet from '../constants/styles';
 
 const DEMO_TAB = 0;
 const CONTENT_TAB = 1;
 
-class App extends Component {
+class Gallery extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -112,13 +113,11 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <style>
-          {require('../../stylesheets/main.scss')}
-        </style>
+      <div className="gallery-wrapper">
+        <style>{ stylesheet }</style>
         <Header />
-        <div className="container app-wrapper">
-          <div className="flexbox--row">
+        <div className="container fullheight">
+          <div className="flexbox--row fullheight">
             <div className="flexbox-item">
               <TableOfContents />
             </div>
@@ -145,4 +144,4 @@ const mapDispatchToProps = {
   updateParam
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(Gallery);

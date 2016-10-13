@@ -6,7 +6,8 @@ import { createHashHistory } from 'history';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 
-import App from './components/app';
+import Home from './components/home';
+import Gallery from './components/gallery';
 import document from 'global/document';
 import AppState from './reducers';
 
@@ -21,9 +22,11 @@ const appHistory = useRouterHistory(createHashHistory)({ queryKey: false })
 ReactDOM.render(
   <Provider store={AppState}>
     <Router history={appHistory}>
-      <Route path="/" component={App}>
+      <Route path="/" component={Home} />
+      <Route path="gallery" component={Gallery} >
         <IndexRoute components={pages[0].components} />
         { pages.map(renderRoute) }
+        <Route path="*" components={pages[0].components} />
       </Route>
     </Router>
   </Provider>,

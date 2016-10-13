@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {DeckGLOverlay} from 'deck.gl';
 import {GridLayer} from '../../../../../deck.gl/src';
 
+import {MAPBOX_STYLES} from '../../constants/defaults';
 import {loadData, useParams, updateMap} from '../../actions/app-actions';
 
 class GridDemo extends Component {
@@ -17,12 +18,16 @@ class GridDemo extends Component {
     this.props.useParams({
       cellSize: {displayName: 'Cell Size', type: 'number', value: 10, step: 5, min: 10}
     });
+    this.props.updateMap({
+      mapStyle: MAPBOX_STYLES.DARK,
+      longitude: -122.4, latitude: 37.8,
+      zoom: 11, pitch: 0, bearing: 0
+    });
   }
 
   componentWillReceiveProps(nextProps) {
     const {data} = nextProps;
     if (data && data !== this.props.data) {
-      this.props.updateMap({longitude: -122.4, latitude: 37.8, zoom: 11});
       console.log('Sample count: ' + data.length);
     }
   }

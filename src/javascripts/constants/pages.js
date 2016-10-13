@@ -20,6 +20,7 @@ export default [
   },
   {
     path: 'scatterplot-layer',
+    groupName: 'Core layers',
     displayName: 'ScatterplotLayer',
     components: {
       demo: ScatterplotDemo,
@@ -28,6 +29,7 @@ export default [
   },
   {
     path: 'arc-layer',
+    groupName: 'Core layers',
     displayName: 'ArcLayer',
     components: {
       demo: ArcDemo,
@@ -36,6 +38,7 @@ export default [
   },
   {
     path: 'choropleth-layer',
+    groupName: 'Core layers',
     displayName: 'ChoroplethLayer',
     components: {
       demo: ChoroplethDemo,
@@ -44,6 +47,7 @@ export default [
   },
   {
     path: 'grid-layer',
+    groupName: 'Core layers',
     displayName: 'GridLayer',
     components: {
       demo: GridDemo,
@@ -52,6 +56,7 @@ export default [
   },
   {
     path: 'performance',
+    groupName: 'Advanced Topics',
     displayName: 'Performance',
     components: {
       content: makeFromMarkdown('https://raw.githubusercontent.com/uber/deck.gl/dev/docs/performance.md')

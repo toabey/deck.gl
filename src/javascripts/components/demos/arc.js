@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {DeckGLOverlay, ArcLayer} from 'deck.gl';
 import {scaleQuantile} from 'd3-scale';
 
+import {MAPBOX_STYLES} from '../../constants/defaults';
 import {loadData, useParams, updateMap} from '../../actions/app-actions';
 
 const inFlowColors = [
@@ -41,12 +42,16 @@ class ArcDemo extends Component {
     this.props.useParams({
       lineWidth: {displayName: 'Width', type: 'number', value: 1, step: 1, min: 1}
     });
+    this.props.updateMap({
+      mapStyle: MAPBOX_STYLES.LIGHT,
+      longitude: -100, latitude: 40.7,
+      zoom: 3, pitch: 0, bearing: 0
+    });
   }
 
   componentWillReceiveProps(nextProps) {
     const {data} = nextProps;
     if (data && data !== this.props.data) {
-      this.props.updateMap({longitude: -100, latitude: 40.7, zoom: 3});
       this._computeQuantile(data);
       console.log('Arc count: ' + data.length);
     }

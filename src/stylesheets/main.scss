@@ -1,61 +1,100 @@
 @import 'highlight';
 @import 'markdown';
+@import 'mixins';
+
+$primary: #00ADE6;
+$secondary: #05E3D5;
+$black: #041725;
+$black-20: #213746;
+$black-40: #5A666D;
+$white: #EFEFEF;
+$white-40: #8D9BA3;
+
+@import 'home';
+@import 'gallery';
+
+body {
+  font-family: ff-clan-web-pro, "Helvetica Neue", Helvetica, sans-serif!important;
+  font-size: 12px;
+  line-height: 1.5;
+}
 
 * {
   padding: 0;
   margin: 0;
-  font-size: 12px;
-  font-family: ff-clan-web-pro, "Helvetica Neue", Helvetica, sans-serif!important;
   box-sizing: border-box;
 }
-.app-wrapper {
-  position: relative;
-  padding-top: 64px;
-}
-header {
-  background: #fff;
-  position: relative;
-  z-index: 99;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-  line-height: 64px;
-  position: fixed;
-  width: 100%;
-  height: 64px;
-}
-header .links {
-  float: right;
-  margin-top: 8px;
+.logo {
+  color: $white;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
 }
 a {
   text-decoration: none;
-  color: #108188;
   display: inline-block;
-  line-height: 1em;
-  border-bottom: solid 0 #108188;
+  cursor: pointer;
 }
-a:active, a.active {
-  color: #108188;
-  font-weight: bold;
+button {
+  color: #aaa;
+  background: $white;
+  padding: 4px 8px;
+  border: solid 1px #ccc;
+  cursor: pointer;
+  text-transform: uppercase;
 }
-a:hover {
-  padding-bottom: 4px;
-  margin-bottom: -8px;
-  border-bottom-width: 4px;
+
+header {
+  background: $black;
+  position: relative;
+  z-index: 99;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  transition: background 500ms;
+  line-height: 64px;
+
+  .links {
+    float: right;
+
+    a {
+      line-height: 58px;
+      color: $white-40;
+      text-transform: uppercase;
+      margin-left: 40px;
+      border-top: solid 3px transparent;
+    }
+    a.active {
+      color: $white;
+      @include linearGradientH(border-image, $primary, $secondary);
+      border-image-slice: 2;
+    }
+  }
 }
+
 button:focus, input:focus {
   outline: none;
 }
-#logo {
-  color: #000;
-  font-weight: 100;
-  font-size: 24px;
-  margin-left: 24px;
-}
 .container {
+  padding: 0 24px;
   margin: 0 auto;
   max-width: 1280px;
   width: 100%;
   overflow: hidden;
+}
+hr {
+  border: none;
+  background: $white;
+  height: 1px;
+}
+hr.short {
+  display: inline-block;
+  margin: 24px 0 0;
+  width: 32px;
+  height: 2px;
+  @include linearGradientH(background, $primary, $secondary);
 }
 .fullheight {
   height: 100vh;
@@ -72,99 +111,13 @@ button:focus, input:focus {
 .flexbox-item {
   position: relative;
   flex: 0 0 auto;
+  overflow-y: auto;
 }
 .flexbox-item--fill {
   position: relative;
   flex: 1 1 auto;
+  overflow-y: auto;
 }
-.toc {
-  width: 240px;
-}
-.toc ul {
-  padding: 24px;
-  position: fixed;
-  top: 64px;
-  width: 100%;
-  list-style: none;
-}
-.toc li {
-  margin-bottom: 24px;
-}
-@media (max-width: 768px) {
-  .flexbox--row {
-    display: block;
-  }
-  .toc {
-    width: 100%;
-  }
-  .toc ul {
-    background: white;
-    z-index: 98;
-  }
-}
-.tabs {
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin: 24px;
-  z-index: 99;
-  list-style: none;
-}
-.tabs li {
-  display: inline;
-  margin-left: -1px;
-}
-.tabs li.active button {
-  color: #000;
-}
-.tabs button {
-  color: #aaa;
-  background: #fff;
-  padding: 4px 8px;
-  border: solid 1px #ccc;
-  cursor: pointer;
-}
-.tabs li:not(.active) button:hover {
-  background: #222;
-  color: #fff;
-  border-color: #000;
-}
-.tab {
-  display: none;
-}
-.tab.active {
-  display: block;
-}
-.markdown {
-  padding: 24px 12px;
-}
-.tab .markdown {
-  padding-top: 72px;
-}
-.options-panel {
-  background: rgba(0,0,0,0.6);
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  padding: 12px 24px;
-}
-.options-panel .input {
-  float: left;
-  width: 60px;
-  margin: 4px;
-}
-.options-panel label {
-  text-transform: uppercase;
-  display: block;
-  color: #fff;
-  margin-bottom: 4px;
-}
-.options-panel input {
-  display: block;
-  width: 100%;
-  height: 20px;
-  border: solid 1px #ccc;
-}
-code {
-  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace !important;
+.text-center {
+  text-align: center;
 }
