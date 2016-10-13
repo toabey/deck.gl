@@ -33,10 +33,11 @@
     "babelify": "^7.2.0",
     "browserify": "13.0.0",
     "budo": "^8.0.3",
+    "sassify": "^2.0.0",
     "uglify-js": "^2.6.1"
   },
   "scripts": {
-    "start": "budo src/javascripts/main.js:main.min.js --dir src/ --  -t sassify -t babelify -t glslify",
+    "start": "budo src/javascripts/main.js:main.min.js --dir src/ --open --  -t sassify -t babelify -t glslify",
     "build": "npm run build-clean && npm run build-copy && npm run build-script",
     "build-clean": "test -d dist || mkdir -p dist && rm -fr dist/*",
     "build-copy": "cp src/index.html dist/index.html && cp -R src/static/ dist/static/",
