@@ -108,12 +108,49 @@ hr.short {
 
   .flexbox-item {
     position: relative;
-    flex: 0 0 auto;
+    flex: 0 1 auto;
     height: 100%;
   }
   .flexbox-item--fill {
     flex: 1 1 auto;
   }
+}
+.layout {
+  display: table-row;
+
+  >div {
+    display: table-cell;
+  }
+  >div:not(:first-child) {
+    margin-left: 48px;
+  }
+  .col-1-3 {
+    width: 33.33%;
+  }
+}
+.position--relative {
+  position: relative;
+}
+.position--absolute {
+  position: absolute;
+}
+.left-top {
+  left: 0;
+  top: 0;
+}
+.left-bottom {
+  left: 0;
+  bottom: 0;
+}
+.left-center {
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.right-center {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .text-center {
   text-align: center;

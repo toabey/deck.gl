@@ -61,6 +61,25 @@ export default class Home extends Component {
           <div className="container text-center">
             <h4>Performance highlights</h4>
             <hr className="short" />
+            <div className="layout">
+              <div className="col-1-3">
+                <img src="./static/icon-1.svg" />
+                <h5>WebGL rendered</h5>
+                <p>Tested, highly performant layers for basic data visualization use cases such as scatterplots, choropleths, and more, as well as support for custom WebGL layers.</p>
+              </div>
+
+              <div className="col-1-3">
+                <img src="./static/icon-2.svg" />
+                <h5>React friendly</h5>
+                <p>Supports efficient WebGL rendering in "data flow architecture" applications.</p>
+              </div>
+
+              <div className="col-1-3">
+                <img src="./static/icon-3.svg" />
+                <h5>Automatic WebGL Buffer Management</h5>
+                <p>Special focus on buffer management, allowing both automatic buffer updates but also full application control of buffer allocation and management.</p>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -79,6 +98,21 @@ export default class Home extends Component {
           <div className="container text-center">
             <h4>How it works</h4>
             <hr className="short" />
+            <div className="canvas position--relative">
+              <img src="./static/layers.png" />
+              <div className="position--absolute left-top">
+                <h5><i>01</i>deck.gl</h5>
+                <p>Deck provides overlays that plug directly into react-map-gl’s overlay model, enabling high-performance map visualizations</p>
+              </div>
+              <div className="position--absolute right-center">
+                <h5><i>02</i>react-map-gl</h5>
+                <p>A webGL based vector tile mapping library. Provides a React friendly API wrapper around Mapbox GL JS.</p>
+              </div>
+              <div className="position--absolute left-bottom">
+                <h5><i>03</i>luma.gl</h5>
+                <p>Our efficient and easy-to-use WebGL framework enabling high-performance browser-based data visualizations.</p>
+              </div>
+            </div>
           </div>
         </section>
 
