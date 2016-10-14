@@ -63,19 +63,19 @@ export default class Home extends Component {
             <hr className="short" />
             <div className="layout">
               <div className="col-1-3">
-                <img src="./static/icon-1.svg" />
+                <img src="./static/Icon-1.svg" />
                 <h5>WebGL rendered</h5>
                 <p>Tested, highly performant layers for basic data visualization use cases such as scatterplots, choropleths, and more, as well as support for custom WebGL layers.</p>
               </div>
 
               <div className="col-1-3">
-                <img src="./static/icon-2.svg" />
+                <img src="./static/Icon-2.svg" />
                 <h5>React friendly</h5>
                 <p>Supports efficient WebGL rendering in "data flow architecture" applications.</p>
               </div>
 
               <div className="col-1-3">
-                <img src="./static/icon-3.svg" />
+                <img src="./static/Icon-3.svg" />
                 <h5>Automatic WebGL Buffer Management</h5>
                 <p>Special focus on buffer management, allowing both automatic buffer updates but also full application control of buffer allocation and management.</p>
               </div>
