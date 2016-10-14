@@ -59,7 +59,7 @@ class Page extends Component {
       Object.keys(toViewport).forEach(key => {
         const v = viewport[key];
         if (isNaN(v)) {
-          nanViewport[key] = v;
+          nanViewport[key] = toViewport[key];
         } else {
           fromViewport[key] = v;
         }
@@ -78,6 +78,7 @@ class Page extends Component {
 
     return {
       ...tabs,
+      demoInfo: DemoComponent && DemoComponent.info,
       demo: DemoComponent ? demo : null
     };
   }
@@ -111,14 +112,14 @@ class Page extends Component {
   }
 
   _renderOptions() {
-    const {params} = this.props;
-
-    if (Object.keys(params).length === 0) {
-      return null;
-    }
+    const {app: {params}} = this.props;
+    const {demoInfo} = this.state;
 
     return (
       <div className="options-panel">
+        <h3>{ demoInfo.title }</h3>
+        <p>{ demoInfo.desc }</p>
+        { Object.keys(params).length > 0 && <hr /> }
         {
           Object.keys(params).map((name, i) => (
             <GenericInput key={i} name={name} {...params[name]}

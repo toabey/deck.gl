@@ -1,9 +1,7 @@
-import 'babel-polyfill';
+```
 import React, {Component} from 'react';
 import {DeckGLOverlay, ArcLayer} from 'deck.gl';
 import {scaleQuantile} from 'd3-scale';
-
-import {MAPBOX_STYLES} from '../../constants/defaults';
 
 const inFlowColors = [
   [255, 255, 204],
@@ -29,38 +27,6 @@ export default class ArcDemo extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-  }
-
-  static get info() {
-    return {
-      title: 'United States County-to-county Migration 2009-2013',
-      desc: 'Arcs show migration flows from county to county'
-    };
-  }
-
-  static get data() {
-    return {
-      type: 'text',
-      url: 'static/arc-data.txt',
-      worker: 'static/arc-data-decoder.js'
-    };
-  }
-
-  static get parameters() {
-    return {
-      lineWidth: {displayName: 'Width', type: 'number', value: 1, step: 1, min: 1}
-    };
-  }
-
-  static get viewport() {
-    return {
-      mapStyle: MAPBOX_STYLES.LIGHT,
-      longitude: -100,
-      latitude: 40.7,
-      zoom: 3,
-      pitch: 30,
-      bearing: 30
-    };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -100,9 +66,6 @@ export default class ArcDemo extends Component {
       getSourceColor: d => inFlowColors[scale(d.weight)],
       getTargetColor: d => outFlowColors[scale(d.weight)],
       strokeWidth: params.lineWidth.value,
-      updateTriggers: {
-        // instanceColors: {color: params.lineWidth.value}
-      },
       isPickable: true
     });
 
@@ -112,3 +75,4 @@ export default class ArcDemo extends Component {
     );
   }
 }
+```

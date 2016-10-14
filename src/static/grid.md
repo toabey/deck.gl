@@ -1,42 +1,8 @@
-import 'babel-polyfill';
+```
 import React, {Component} from 'react';
 import {DeckGLOverlay, GridLayer} from 'deck.gl';
 
-import {MAPBOX_STYLES} from '../../constants/defaults';
-
 export default class GridDemo extends Component {
-
-  static get info() {
-    return {
-      title: 'California Public Transit Distribution',
-      desc: 'Accessibility to public transportation'
-    };
-  }
-
-  static get data() {
-    return {
-      type: 'text',
-      url: 'static/grid-data.txt',
-      worker: 'static/grid-data-decoder.js'
-    };
-  }
-
-  static get parameters() {
-    return {
-      cellSize: {displayName: 'Cell Size', type: 'number', value: 10, step: 5, min: 10}
-    };
-  }
-
-  static get viewport() {
-    return {
-      mapStyle: MAPBOX_STYLES.DARK,
-      longitude: -122.4,
-      latitude: 37.8,
-      zoom: 11,
-      pitch: 0,
-      bearing: 0
-    };
-  }
 
   componentWillReceiveProps(nextProps) {
     const {data} = nextProps;
@@ -66,3 +32,5 @@ export default class GridDemo extends Component {
     );
   }
 }
+
+```

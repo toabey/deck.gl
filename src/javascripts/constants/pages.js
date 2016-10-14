@@ -18,7 +18,7 @@ export const examplePages = [
     displayName: 'ArcLayer',
     tabs: {
       demo: 'ArcDemo',
-      content: 'static/scatterplot.md'
+      content: 'static/arc.md'
     }
   },
   {
@@ -27,7 +27,7 @@ export const examplePages = [
     displayName: 'ChoroplethLayer',
     tabs: {
       demo: 'ChoroplethDemo',
-      content: getGithubUrl('choropleth.md')
+      content: 'static/choropleth.md'
     }
   },
   {
@@ -36,7 +36,7 @@ export const examplePages = [
     displayName: 'GridLayer',
     tabs: {
       demo: 'GridDemo',
-      content: 'static/scatterplot.md'
+      content: 'static/grid.md'
     }
   }
 ];

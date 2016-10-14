@@ -1,22 +1,41 @@
-This is a __placeholder__.
-
 ```
-render() {
-  const {data, viewport, params} = this.props;
+import React, {Component} from 'react';
+import {DeckGLOverlay, ScatterplotLayer} from 'deck.gl';
 
-  const layer = new ScatterplotLayer({
-    id: 'scatter-plot',
-    ...this.props.viewport,
-    data: data.map(d => ({
-      position: {x: Number(d.X), y: Number(d.Y), z: 0},
-      color: params.color.value,
-      radius: params.radius.value
-    })),
-    isPickable: true
-  });
+export default class ScatterPlotDemo extends Component {
+  
+  componentWillReceiveProps(nextProps) {
+    const {data} = nextProps;
+    if (data && data !== this.props.data) {
+      console.log('Point count: ' + data.length);
+    }
+  }
 
-  return (
-    <DeckGLOverlay {...viewport} layers={ [layer] } />
-  );
+  render() {
+    const {viewport, params, data} = this.props;
+
+    if (!data) {
+      return null;
+    }
+
+    const layer = new ScatterplotLayer({
+      id: 'scatter-plot',
+      ...viewport,
+      data: data,
+      getPosition: d => [d[0], d[1], 0],
+      getColor: d => d[2] === 1 ? params.colorM.value : params.colorF.value,
+      getRadius: d => params.radius.value,
+      updateTriggers: {
+        instanceColors: {c1: params.colorM.value, c2: params.colorF.value},
+        instancePositions: {radius: params.radius.value}
+      },
+      isPickable: true
+    });
+
+    return (
+      <DeckGLOverlay {...viewport} layers={ [layer] } />
+    );
+  }
 }
+
 ```

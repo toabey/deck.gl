@@ -6,6 +6,13 @@ import {MAPBOX_STYLES} from '../../constants/defaults';
 
 export default class ScatterPlotDemo extends Component {
 
+  static get info() {
+    return {
+      title: 'Every Person in New York City',
+      desc: 'Each dot accounts for 10 people. Density per tract from 2015 census data.'
+    };
+  }
+
   static get data() {
     return {
       type: 'text',
