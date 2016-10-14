@@ -2,20 +2,22 @@ import 'babel-polyfill';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import MapGL from 'react-map-gl';
+import TWEEN from 'tween.js';
 
 import MarkdownPage from '../components/markdown-page';
 import GenericInput from './input';
 import * as Demos from './demos';
-
-import {
-  updateMap,
-  updateParam, useParams,
-  loadData, loadContent
-} from '../actions/app-actions';
+import * as appActions from '../actions/app-actions';
 import {MAPBOX_ACCESS_TOKEN, MAPBOX_STYLES} from '../constants/defaults';
 
 const DEMO_TAB = 0;
 const CONTENT_TAB = 1;
+
+function animate() {
+  TWEEN.update();
+  requestAnimationFrame(animate);
+}
+animate();
 
 class Page extends Component {
   constructor(props) {
@@ -32,23 +34,45 @@ class Page extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.routes !== nextProps.routes) {
+    const {route} = nextProps;
+    if (this.props.route !== route) {
       this.setState({
         tab: DEMO_TAB,
-        ...this._loadTabs(nextProps.route.tabs)
+        ...this._loadTabs(route.tabs)
       });
     }
   }
 
   _loadTabs(tabs) {
     const {demo, content} = tabs;
-    const {loadData, useParams, updateMap, loadContent} = this.props;
+    const {viewport, loadData, useParams, updateMap, loadContent} = this.props;
     const DemoComponent = Demos[demo];
 
     if (DemoComponent) {
       loadData(demo, DemoComponent.data);
       useParams(DemoComponent.parameters);
-      updateMap(DemoComponent.viewport);
+
+      // fly to new viewport
+      const fromViewport = {};
+      const nanViewport = {};
+      const toViewport = DemoComponent.viewport;
+      Object.keys(toViewport).forEach(key => {
+        const v = viewport[key];
+        if (isNaN(v)) {
+          nanViewport[key] = v;
+        } else {
+          fromViewport[key] = v;
+        }
+      });
+
+      TWEEN.removeAll();
+      new TWEEN.Tween(fromViewport)
+        .to(toViewport, 1000)
+        .easing(TWEEN.Easing.Exponential.Out)
+        .onUpdate(function() {
+          updateMap({...this, ...nanViewport});
+        })
+        .start();
     }
     loadContent(content);
 
@@ -68,7 +92,7 @@ class Page extends Component {
   }
 
   _renderMap() {
-    const {children, params, viewport, owner, data} = this.props;
+    const {viewport, app: {params, owner, data}} = this.props;
     const {demo} = this.state;
     const DemoComponent = Demos[demo];
 
@@ -146,7 +170,7 @@ class Page extends Component {
     const {demo} = this.state;
 
     return (
-      <div>
+      <div className="page">
         { demo && this._renderTabs() }
         { this._renderTabContent() }
       </div>
@@ -154,20 +178,4 @@ class Page extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    ...state.app,
-    viewport: state.viewport,
-    contents: state.contents
-  };
-}
-
-const mapDispatchToProps = {
-  updateMap,
-  useParams,
-  updateParam,
-  loadData,
-  loadContent
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Page);
+export default connect(state => state, appActions)(Page);

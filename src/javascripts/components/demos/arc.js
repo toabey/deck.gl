@@ -51,8 +51,8 @@ export default class ArcDemo extends Component {
       longitude: -100,
       latitude: 40.7,
       zoom: 3,
-      pitch: 0,
-      bearing: 0
+      pitch: 30,
+      bearing: 30
     };
   }
 
