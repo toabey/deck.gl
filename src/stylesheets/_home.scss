@@ -40,7 +40,7 @@
 }
 
 #banner {
-  background-image: url('./static/header-bg.jpg');
+  background-image: url('images/header-bg.jpg');
   background-size: cover;
   background-position: center;
   color: $white;
@@ -64,7 +64,7 @@
 }
 
 #features {
-  background-image: url('./static/laptop.jpg');
+  background-image: url('images/laptop.jpg');
   background-size: 682px;
   background-repeat: no-repeat;
   background-position: right bottom;
@@ -120,7 +120,7 @@
 }
 
 #footer {
-  background-image: url('./static/footer-pattern.gif');
+  background-image: url('images/footer-pattern.gif');
   background-size: 32px;
   background-repeat: repeat;
   color: $white;

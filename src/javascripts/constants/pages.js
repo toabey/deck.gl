@@ -9,7 +9,7 @@ export const examplePages = [
     displayName: 'ScatterplotLayer',
     tabs: {
       demo: 'ScatterplotDemo',
-      content: 'static/scatterplot.md'
+      content: 'docs/scatterplot.md'
     }
   },
   {
@@ -18,7 +18,7 @@ export const examplePages = [
     displayName: 'ArcLayer',
     tabs: {
       demo: 'ArcDemo',
-      content: 'static/arc.md'
+      content: 'docs/arc.md'
     }
   },
   {
@@ -27,7 +27,7 @@ export const examplePages = [
     displayName: 'ChoroplethLayer',
     tabs: {
       demo: 'ChoroplethDemo',
-      content: 'static/choropleth.md'
+      content: 'docs/choropleth.md'
     }
   },
   {
@@ -36,7 +36,7 @@ export const examplePages = [
     displayName: 'GridLayer',
     tabs: {
       demo: 'GridDemo',
-      content: 'static/grid.md'
+      content: 'docs/grid.md'
     }
   }
 ];
@@ -47,7 +47,7 @@ export const docPages = [
     groupName: 'Overview',
     displayName: 'Overview',
     tabs: {
-      content: 'static/overview.md'
+      content: 'docs/overview.md'
     }
   },
   {

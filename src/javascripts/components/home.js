@@ -63,19 +63,19 @@ export default class Home extends Component {
             <hr className="short" />
             <div className="layout">
               <div className="col-1-3">
-                <img src="./static/Icon-1.svg" />
+                <img src="images/Icon-1.svg" />
                 <h5>WebGL rendered</h5>
                 <p>Tested, highly performant layers for basic data visualization use cases such as scatterplots, choropleths, and more, as well as support for custom WebGL layers.</p>
               </div>
 
               <div className="col-1-3">
-                <img src="./static/Icon-2.svg" />
+                <img src="images/Icon-2.svg" />
                 <h5>React friendly</h5>
                 <p>Supports efficient WebGL rendering in "data flow architecture" applications.</p>
               </div>
 
               <div className="col-1-3">
-                <img src="./static/Icon-3.svg" />
+                <img src="images/Icon-3.svg" />
                 <h5>Automatic WebGL Buffer Management</h5>
                 <p>Special focus on buffer management, allowing both automatic buffer updates but also full application control of buffer allocation and management.</p>
               </div>
@@ -99,7 +99,7 @@ export default class Home extends Component {
             <h4>How it works</h4>
             <hr className="short" />
             <div className="canvas position--relative">
-              <img src="./static/layers.png" />
+              <img src="images/layers.png" />
               <div className="position--absolute left-top">
                 <h5><i>01</i>deck.gl</h5>
                 <p>Deck provides overlays that plug directly into react-map-gl’s overlay model, enabling high-performance map visualizations</p>
@@ -121,7 +121,7 @@ export default class Home extends Component {
             <div className="logo">deck.gl</div>
             <hr className="short" />
             <h4>Made by</h4>
-            <img src="static/uber-logo.png" />
+            <img src="images/uber-logo.png" />
           </div>
         </section>
 

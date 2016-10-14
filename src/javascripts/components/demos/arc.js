@@ -41,8 +41,8 @@ export default class ArcDemo extends Component {
   static get data() {
     return {
       type: 'text',
-      url: 'static/arc-data.txt',
-      worker: 'static/arc-data-decoder.js'
+      url: 'data/arc-data.txt',
+      worker: 'workers/arc-data-decoder.js'
     };
   }
 

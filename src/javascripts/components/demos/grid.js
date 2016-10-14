@@ -16,8 +16,8 @@ export default class GridDemo extends Component {
   static get data() {
     return {
       type: 'text',
-      url: 'static/grid-data.txt',
-      worker: 'static/grid-data-decoder.js'
+      url: 'data/grid-data.txt',
+      worker: 'workers/grid-data-decoder.js'
     };
   }
 
