@@ -44,7 +44,7 @@
     "start": "budo src/javascripts/main.js:main.min.js --dir src/static/ --open --  -t sassify -t babelify -t glslify",
     "build": "npm run build-clean && npm run build-copy && npm run build-script",
     "build-clean": "test -d dist || mkdir -p dist && rm -fr dist/*",
-    "build-copy": "cp -R src/static/ dist/",
+    "build-copy": "cp -R src/static/* dist/",
     "build-script": "NODE_ENV=production browserify src/javascripts/main.js -o -t sassify -t babelify -t glslify | uglifyjs > dist/main.min.js"
   },
   "repository": {
