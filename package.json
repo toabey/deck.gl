@@ -17,6 +17,7 @@
     "deck.gl": "3.0.0-beta18",
     "glslify": "^5.1.0",
     "highlight.js": "^9.7.0",
+    "luma.gl": "^2.9.0",
     "marked": "^0.3.6",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
