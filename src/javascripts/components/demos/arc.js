@@ -1,11 +1,9 @@
 import 'babel-polyfill';
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 import {DeckGLOverlay, ArcLayer} from 'deck.gl';
 import {scaleQuantile} from 'd3-scale';
 
 import {MAPBOX_STYLES} from '../../constants/defaults';
-import {loadData, useParams, updateMap} from '../../actions/app-actions';
 
 const inFlowColors = [
   [255, 255, 204],
@@ -27,26 +25,35 @@ const outFlowColors = [
   [177,0,38],
 ];
 
-class ArcDemo extends Component {
+export default class ArcDemo extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
-  componentDidMount() {
-    this.props.loadData(this, {
+  static get data() {
+    return {
       type: 'text',
       url: 'static/arc-data.txt',
       worker: 'static/arc-data-decoder.js'
-    });
-    this.props.useParams({
+    };
+  }
+
+  static get parameters() {
+    return {
       lineWidth: {displayName: 'Width', type: 'number', value: 1, step: 1, min: 1}
-    });
-    this.props.updateMap({
+    };
+  }
+
+  static get viewport() {
+    return {
       mapStyle: MAPBOX_STYLES.LIGHT,
-      longitude: -100, latitude: 40.7,
-      zoom: 3, pitch: 0, bearing: 0
-    });
+      longitude: -100,
+      latitude: 40.7,
+      zoom: 3,
+      pitch: 0,
+      bearing: 0
+    };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -70,10 +77,10 @@ class ArcDemo extends Component {
   }
 
   render() {
-    const {viewport, params, data, owner} = this.props;
+    const {viewport, params, data} = this.props;
     const {scale} = this.state;
 
-    if (!data || owner !== this.constructor.name) {
+    if (!data) {
       return null;
     }
 
@@ -98,18 +105,3 @@ class ArcDemo extends Component {
     );
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    ...state.app,
-    viewport: state.viewport,
-  };
-}
-
-const mapDispatchToProps = {
-  updateMap,
-  loadData,
-  useParams
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ArcDemo);

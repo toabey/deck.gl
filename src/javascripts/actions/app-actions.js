@@ -29,8 +29,7 @@ export function updateMap(viewport) {
   return {type: 'UPDATE_MAP', viewport};
 }
 
-export function loadData(source, {type, url, worker}) {
-  const owner = source.constructor.name;
+export function loadData(owner, {type, url, worker}) {
 
   return dispatch => {
     dispatch(loadDataStart(owner));

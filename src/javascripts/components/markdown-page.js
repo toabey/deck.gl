@@ -2,30 +2,11 @@ import 'babel-polyfill';
 import marked from 'marked';
 import {highlight} from 'highlight.js';
 import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
 
-import {loadContent} from '../actions/app-actions';
-
-class MarkdownPage extends Component {
-
-  componentWillMount() {
-    this._loadContent(this.props.url);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const {url} = nextProps;
-    if (url !== this.props.url) {
-      this._loadContent(url);
-    }
-  }
-
-  _loadContent(url) {
-    this.props.loadContent(url);
-  }
+export default class MarkdownPage extends Component {
 
   render() {
-    const {contents, url} = this.props;
-    const content = contents[url];
+    const {content} = this.props;
 
     if (content) {
       marked.setOptions({
@@ -45,17 +26,5 @@ class MarkdownPage extends Component {
 }
 
 MarkdownPage.propTypes = {
-  url: PropTypes.string
+  content: PropTypes.string
 };
-
-function mapStateToProps(state) {
-  return {
-    contents: state.contents
-  };
-}
-
-const mapDispatchToProps = {
-  loadContent
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MarkdownPage);

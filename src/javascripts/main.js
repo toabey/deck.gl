@@ -8,13 +8,14 @@ import {Provider} from 'react-redux';
 
 import Home from './components/home';
 import Gallery from './components/gallery';
+import Page from './components/page';
 import document from 'global/document';
 import AppState from './reducers';
 
 import {examplePages, docPages} from './constants/pages';
 
 function renderRoute(page, i) {
-  return <Route key={i} path={page.path} components={page.components} />
+  return <Route key={i} path={page.path} component={Page} tabs={page.tabs} />
 }
 
 const appHistory = useRouterHistory(createHashHistory)({ queryKey: false })

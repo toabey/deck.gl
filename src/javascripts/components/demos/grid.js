@@ -1,27 +1,34 @@
 import 'babel-polyfill';
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 import {DeckGLOverlay, GridLayer} from 'deck.gl';
 
 import {MAPBOX_STYLES} from '../../constants/defaults';
-import {loadData, useParams, updateMap} from '../../actions/app-actions';
 
 class GridDemo extends Component {
 
-  componentDidMount() {
-    this.props.loadData(this, {
+  static get data() {
+    return {
       type: 'text',
       url: 'static/grid-data.txt',
       worker: 'static/grid-data-decoder.js'
-    });
-    this.props.useParams({
+    };
+  }
+
+  static get parameters() {
+    return {
       cellSize: {displayName: 'Cell Size', type: 'number', value: 10, step: 5, min: 10}
-    });
-    this.props.updateMap({
+    };
+  }
+
+  static get viewport() {
+    return {
       mapStyle: MAPBOX_STYLES.DARK,
-      longitude: -122.4, latitude: 37.8,
-      zoom: 11, pitch: 0, bearing: 0
-    });
+      longitude: -122.4,
+      latitude: 37.8,
+      zoom: 11,
+      pitch: 0,
+      bearing: 0
+    };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -32,9 +39,9 @@ class GridDemo extends Component {
   }
 
   render() {
-    const {viewport, params, data, owner} = this.props;
+    const {viewport, params, data} = this.props;
 
-    if (!data || owner !== this.constructor.name) {
+    if (!data) {
       return null;
     }
 
@@ -52,18 +59,3 @@ class GridDemo extends Component {
     );
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    ...state.app,
-    viewport: state.viewport,
-  };
-}
-
-const mapDispatchToProps = {
-  updateMap,
-  loadData,
-  useParams
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(GridDemo);

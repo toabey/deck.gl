@@ -1,11 +1,9 @@
 import 'babel-polyfill';
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 import {DeckGLOverlay, ChoroplethLayer} from 'deck.gl';
 import {scaleQuantile} from 'd3-scale';
 
 import {MAPBOX_STYLES} from '../../constants/defaults';
-import {loadData, useParams, updateMap} from '../../actions/app-actions';
 
 const inFlowColors = [
   [255, 255, 204],
@@ -27,24 +25,33 @@ const outFlowColors = [
   [177,0,38],
 ];
 
-class ChoroplethDemo extends Component {
+export default class ChoroplethDemo extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
-  componentDidMount() {
-    this.props.loadData(this, {
+  static get data() {
+    return {
       type: 'text',
       url: 'static/choropleth-data.json',
       worker: 'static/choropleth-data-decoder.js'
-    });
-    this.props.useParams({});
-    this.props.updateMap({
+    };
+  }
+
+  static get parameters() {
+    return {};
+  }
+
+  static get viewport() {
+    return {
       mapStyle: MAPBOX_STYLES.LIGHT,
-      longitude: -100, latitude: 40.7,
-      zoom: 3, pitch: 0, bearing: 0
-    });
+      longitude: -100,
+      latitude: 40.7,
+      zoom: 3,
+      pitch: 0,
+      bearing: 0
+    };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -95,10 +102,10 @@ class ChoroplethDemo extends Component {
   }
 
   render() {
-    const {viewport, params, data, owner} = this.props;
+    const {viewport, params, data} = this.props;
     const {scale, hoveredFeature} = this.state;
 
-    if (!data || owner !== this.constructor.name) {
+    if (!data) {
       return null;
     }
 
@@ -128,18 +135,3 @@ class ChoroplethDemo extends Component {
     );
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    ...state.app,
-    viewport: state.viewport,
-  };
-}
-
-const mapDispatchToProps = {
-  updateMap,
-  loadData,
-  useParams
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ChoroplethDemo);
