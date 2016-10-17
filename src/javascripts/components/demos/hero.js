@@ -4,6 +4,12 @@ import {DeckGLOverlay} from 'deck.gl';
 import TripsLayer from './trips-layer/trips-layer';
 import {MAPBOX_STYLES} from '../../constants/defaults';
 
+const BLENDING = {
+  enable: true,
+  blendFunc: ['SRC_ALPHA', 'ONE'],
+  blendEquation: 'FUNC_ADD'
+};
+
 export default class HeroDemo extends Component {
 
   static get info() {
@@ -60,12 +66,6 @@ export default class HeroDemo extends Component {
     }
   }
 
-  _onBeforeRenderFrame({gl}) {
-    gl.enable(gl.BLEND);
-    gl.blendFuncSeparate(gl.ONE, gl.ONE, gl.ZERO, gl.ZERO);
-    gl.blendEquationSeparate(gl.FUNC_ADD, gl.FUNC_ADD);
-  }
-
   _animate() {
     this.setState({time: (this.state.time + 1) % 3600});
     this._animation = requestAnimationFrame(this._animate.bind(this));
@@ -92,7 +92,7 @@ export default class HeroDemo extends Component {
 
     return (
       <DeckGLOverlay {...viewport} layers={ [layer] }
-        onBeforeRenderFrame={ this._onBeforeRenderFrame }
+        blending={BLENDING}
        />
     );
   }
