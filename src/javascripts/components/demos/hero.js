@@ -14,8 +14,8 @@ export default class HeroDemo extends Component {
 
   static get info() {
     return {
-      title: 'Yellow Cab Trips in Manhattan',
-      desc: 'June 16, 2016'
+      title: 'Yellow Cab Vs. Green Cab Trips in Manhattan',
+      desc: 'June 16, 2016 21:00 - 22:00'
     };
   }
 
@@ -76,20 +76,21 @@ export default class HeroDemo extends Component {
     if (!data) {
       return null;
     }
-    const layer = new TripsLayer({
-      id: 'trips',
-      ...viewport,
-      data: data,
-      getPath: d => d.segments,
-      getColor: d => d.vendor === 0 ? [253,128,93] : [23,184,190],
-      opacity: 0.3,
-      strokeWidth: 2,
-      trailLength: 180,
-      currentTime: this.state.time
-    });
+    const layers = data.map((layerData, layerIndex) => new TripsLayer({
+        id: `trips-${layerIndex}`,
+        ...viewport,
+        data: layerData,
+        getPath: d => d.segments,
+        getColor: d => d.vendor === 0 ? [253,128,93] : [23,184,190],
+        opacity: 0.3,
+        strokeWidth: 2,
+        trailLength: 180,
+        currentTime: this.state.time
+      })
+    );
 
     return (
-      <DeckGLOverlay {...viewport} layers={ [layer] }
+      <DeckGLOverlay {...viewport} layers={ layers }
         blending={BLENDING}
        />
     );

@@ -27,14 +27,14 @@ onmessage = function(e) {
           count++;
         }
 
-        if (result.length >= FLUSH_LIMIT && result.length === count) {
-          postMessage({action: 'add', data: result});
+        if (result.length >= FLUSH_LIMIT) {
+          postMessage({action: 'add', data: [result]});
           result = [];
         }
       }
     });
 
-    postMessage({action: 'add', data: result});
+    postMessage({action: 'add', data: [result]});
     postMessage({action: 'end'});
   }
 };
