@@ -1,0 +1,99 @@
+import 'babel-polyfill';
+import React, {Component} from 'react';
+import {DeckGLOverlay} from 'deck.gl';
+import TripsLayer from './trips-layer/trips-layer';
+import {MAPBOX_STYLES} from '../../constants/defaults';
+
+export default class HeroDemo extends Component {
+
+  static get info() {
+    return {
+      title: 'Yellow Cab Trips in Manhattan',
+      desc: 'June 16, 2016'
+    };
+  }
+
+  static get data() {
+    return {
+      type: 'text',
+      url: 'data/hero-data.txt',
+      worker: 'workers/hero-data-decoder.js'
+    };
+  }
+
+  static get parameters() {
+    return {};
+  }
+
+  static get viewport() {
+    return {
+      mapStyle: MAPBOX_STYLES.DARK,
+      longitude: -74.0,
+      latitude: 40.74,
+      zoom: 12,
+      pitch: 0,
+      bearing: 0
+    };
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      time: 0
+    };
+    this._animation = null;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {data} = nextProps;
+    if (data && data !== this.props.data) {
+      console.log('Sample count: ' + data.length);
+      if (!this._animation) {
+        this._animate();
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    if (!this._animation) {
+      cancelAnimationFrame(this._animation);
+    }
+  }
+
+  _onBeforeRenderFrame({gl}) {
+    gl.enable(gl.BLEND);
+    gl.blendFuncSeparate(gl.ONE, gl.ONE, gl.ZERO, gl.ZERO);
+    gl.blendEquationSeparate(gl.FUNC_ADD, gl.FUNC_ADD);
+  }
+
+  _animate() {
+    this.setState({time: (this.state.time + 1) % 3600});
+    this._animation = requestAnimationFrame(this._animate.bind(this));
+  }
+
+  render() {
+    const {viewport, params, data} = this.props;
+
+    if (!data) {
+      return null;
+    }
+    const layer = new TripsLayer({
+      id: 'trips',
+      ...viewport,
+      data: data,
+      getPath: d => d.segments,
+      getColor: d => [23, 129, 127],
+      // getColor: d => [6, 229, 227],
+      opacity: 1,
+      strokeWidth: 4,
+      trailLength: 180,
+      currentTime: this.state.time
+    });
+
+    return (
+      <DeckGLOverlay {...viewport} layers={ [layer] }
+        onBeforeRenderFrame={ this._onBeforeRenderFrame }
+       />
+    );
+  }
+}

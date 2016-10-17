@@ -38,6 +38,15 @@ export const examplePages = [
       demo: 'GridDemo',
       content: 'docs/grid.md'
     }
+  },
+  {
+    path: 'trip-routes',
+    groupName: 'Example layers',
+    displayName: 'Trip Routes',
+    tabs: {
+      demo: 'HeroDemo',
+      content: 'docs/grid.md'
+    }
   }
 ];
 
