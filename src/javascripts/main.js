@@ -12,7 +12,7 @@ import Page from './components/page';
 import document from 'global/document';
 import AppState from './reducers';
 
-import {examplePages, docPages} from './constants/pages';
+import {examplePages, docPages, layerDocPages} from './constants/pages';
 
 function renderRoute(page, i) {
   return <Route key={i} path={page.path} component={Page} tabs={page.tabs} />
@@ -30,6 +30,10 @@ ReactDOM.render(
       <Route path="documentation" component={Gallery} pages={docPages}>
         <IndexRedirect to={docPages[0].path} />
         { docPages.map(renderRoute) }
+      </Route>
+      <Route path="layers" component={Gallery} pages={layerDocPages}>
+        <IndexRedirect to={layerDocPages[0].path} />
+        { layerDocPages.map(renderRoute) }
       </Route>
       <Route path="*" component={Home} />
     </Router>

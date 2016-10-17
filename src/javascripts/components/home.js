@@ -44,14 +44,25 @@ export default class Home extends Component {
 
         <section id="features">
           <div className="container">
-            <h2>Scientific-grade data visualization <br /> for building mapping tools</h2>
+            <h2>Scientific-grade data visualizations for maps</h2>
             <hr className="short" />
+
             <h3>GPU Accelerated</h3>
-            <p>We leverage shaders and the GPU to ensure high frame rates with large data sets.</p>
-            <h3>Easy API</h3>
-            <p>We take the headaches out of making data layers and map layers play nice together. One simple API for all!</p>
-            <h3>Geospatial Specific</h3>
-            <p>We provide you with a core set of beautify, fast layers to quickly visualize your GIS data. If those aren’t enough, you can create custom layers!</p>
+            <p>We leverage shaders and the GPU to ensure high frame rates with
+               large data sets.
+            </p>
+
+            <h3>Cartographic Projections Made Easy</h3>
+            <p>Doesn't matter if your data is in latitude/longitudes, meter
+               offsets, or just plain x,y,z coordinates. deck.gl layers
+               can handle them all.
+            </p>
+
+            <h3>Layer Catalog</h3>
+            <p>Comes with a core set of beautiful, fast layers to quickly
+               visualize your GIS data. If those aren’t enough,
+               you can easily customize them or create your own layers!
+            </p>
           </div>
         </section>
 
@@ -65,19 +76,30 @@ export default class Home extends Component {
               <div className="col-1-3">
                 <img src="images/Icon-1.svg" />
                 <h5>WebGL rendered</h5>
-                <p>Tested, highly performant layers for basic data visualization use cases such as scatterplots, choropleths, and more, as well as support for custom WebGL layers.</p>
+                <p>Tested, highly performant layers for core data
+                   visualization use cases such as scatterplots, choropleths,
+                   and more, as well as support for custom WebGL layers.
+                </p>
               </div>
 
               <div className="col-1-3">
                 <img src="images/Icon-2.svg" />
-                <h5>React friendly</h5>
-                <p>Supports efficient WebGL rendering in "data flow architecture" applications.</p>
+                <h5>React and MapboxGL friendly</h5>
+                <p>Comes with strong React and MapboxGL integrations.
+                   deck.gl is a particularly good match with React, supporting
+                   efficient WebGL rendering in "data flow architecture"
+                   applications.
+                </p>
               </div>
+
 
               <div className="col-1-3">
                 <img src="images/Icon-3.svg" />
                 <h5>Automatic WebGL Buffer Management</h5>
-                <p>Special focus on buffer management, allowing both automatic buffer updates but also full application control of buffer allocation and management.</p>
+                <p>Special focus on buffer management, allowing both automatic
+                   buffer updates but also full application control of buffer
+                   allocation and management.
+                </p>
               </div>
             </div>
           </div>
@@ -102,15 +124,22 @@ export default class Home extends Component {
               <img src="images/layers.png" />
               <div className="position--absolute left-top">
                 <h5><i>01</i>deck.gl</h5>
-                <p>Deck provides overlays that plug directly into react-map-gl’s overlay model, enabling high-performance map visualizations</p>
+                <p>Deck provides overlays that plug directly into react-map-gl’s
+                   overlay model, enabling high-performance map visualizations
+                </p>
               </div>
+
               <div className="position--absolute right-center">
                 <h5><i>02</i>react-map-gl</h5>
-                <p>A webGL based vector tile mapping library. Provides a React friendly API wrapper around Mapbox GL JS.</p>
+                <p>A WebGL based vector tile mapping library. Provides a React
+                   friendly API wrapper around Mapbox GL JS.
+                </p>
               </div>
               <div className="position--absolute left-bottom">
                 <h5><i>03</i>luma.gl</h5>
-                <p>Our efficient and easy-to-use WebGL framework enabling high-performance browser-based data visualizations.</p>
+                <p>Our efficient and easy-to-use WebGL framework enabling
+                   high-performance browser-based data visualizations.
+                </p>
               </div>
             </div>
           </div>

@@ -51,38 +51,6 @@ export const docPages = [
     }
   },
   {
-    path: 'react-integration',
-    groupName: 'Overview',
-    displayName: 'React Integration',
-    tabs: {
-      content: getGithubUrl('react-integration.md')
-    }
-  },
-  {
-    path: 'using-with-react',
-    groupName: 'Overview',
-    displayName: 'Using With React',
-    tabs: {
-      content: getGithubUrl('using-with-react.md')
-    }
-  },
-  {
-    path: 'coordinate-systems',
-    groupName: 'Overview',
-    displayName: 'Coordinate Systems',
-    tabs: {
-      content: getGithubUrl('viewport.md')
-    }
-  },
-  {
-    path: 'layer-class',
-    groupName: 'Layers',
-    displayName: 'Layer Class',
-    tabs: {
-      content: getGithubUrl('layer.md')
-    }
-  },
-  {
     path: 'using-layers',
     groupName: 'Layers',
     displayName: 'Using Layers',
@@ -91,27 +59,75 @@ export const docPages = [
     }
   },
   {
-    path: 'core-layers',
+    path: 'layer-class',
     groupName: 'Layers',
-    displayName: 'Core Layers',
+    displayName: 'The Layer Class',
     tabs: {
-      content: getGithubUrl('core-layers.md')
+      content: getGithubUrl('layer.md')
     }
   },
   {
-    path: 'sample-layers',
+    path: 'coordinate-systems',
     groupName: 'Layers',
-    displayName: 'Sample Layers',
+    displayName: 'Coordinate Systems',
     tabs: {
-      content: getGithubUrl('sample-layers.md')
+      content: getGithubUrl('coordinate-systems.md')
     }
   },
   {
     path: 'custom-layers',
-    groupName: 'Layers',
+    groupName: 'Creating Custom Layers',
     displayName: 'Custom Layers',
     tabs: {
       content: getGithubUrl('custom-layers.md')
+    }
+  },
+  {
+    path: 'layer-lifecycle',
+    groupName: 'Creating Custom Layers',
+    displayName: 'Layer Lifecycle',
+    tabs: {
+      content: getGithubUrl('layer-lifecycle.md')
+    }
+  },
+  {
+    path: 'attribute-management',
+    groupName: 'Creating Custom Layers',
+    displayName: 'Attribute Management',
+    tabs: {
+      content: getGithubUrl('attribute-management.md')
+    }
+  },
+  {
+    path: 'writing-shaders',
+    groupName: 'Creating Custom Layers',
+    displayName: 'Writing Shaders',
+    tabs: {
+      content: getGithubUrl('writing-shaders.md')
+    }
+  },
+  {
+    path: 'using-with-react',
+    groupName: 'Usage',
+    displayName: 'Using With React',
+    tabs: {
+      content: getGithubUrl('using-with-react.md')
+    }
+  },
+  {
+    path: 'using-with-mapbox-gl',
+    groupName: 'Usage',
+    displayName: 'Using With MapboxGL',
+    tabs: {
+      content: getGithubUrl('using-with-mapbox-gl.md')
+    }
+  },
+  {
+    path: 'using-standalone',
+    groupName: 'Usage',
+    displayName: 'Using Standalone',
+    tabs: {
+      content: getGithubUrl('using-standalone.md')
     }
   },
   {
@@ -131,3 +147,63 @@ export const docPages = [
     }
   }
 ];
+
+export const layerDocPages = [
+  {
+    path: 'arc-layer',
+    groupName: 'Core Layers',
+    displayName: 'ArcLayer',
+    tabs: {
+      content: getGithubUrl('layers/arc-layer.md')
+    }
+  },
+  {
+    path: 'choropleth-layer',
+    groupName: 'Core Layers',
+    displayName: 'ChoroplethLayer',
+    tabs: {
+      content: getGithubUrl('layers/choropleth-layer.md')
+    }
+  },
+  {
+    path: 'grid-layer',
+    groupName: 'Core Layers',
+    displayName: 'GridLayer',
+    tabs: {
+      content: getGithubUrl('layers/grid-layer.md')
+    }
+  },
+  {
+    path: 'line-layer',
+    groupName: 'Core Layers',
+    displayName: 'LineLayer',
+    tabs: {
+      content: getGithubUrl('layers/line-layer.md')
+    }
+  },
+  {
+    path: 'scatterplot-layer',
+    groupName: 'Core Layers',
+    displayName: 'ScatterplotLayer',
+    tabs: {
+      content: getGithubUrl('layers/scatterplot-layer.md')
+    }
+  },
+  {
+    path: '64bit-layers',
+    groupName: '64bit Layers',
+    displayName: 'Overview',
+    tabs: {
+      content: getGithubUrl('layers/64bit-layers.md')
+    }
+  },
+  {
+    path: 'sample-layers',
+    groupName: 'Sample Layers',
+    displayName: 'Overview',
+    tabs: {
+      content: getGithubUrl('layers/sample-layers.md')
+    }
+  }
+];
+
