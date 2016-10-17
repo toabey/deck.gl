@@ -53,7 +53,6 @@ export default class HeroDemo extends Component {
   componentWillReceiveProps(nextProps) {
     const {data} = nextProps;
     if (data && data !== this.props.data) {
-      console.log('Sample count: ' + data.length);
       if (!this._animation) {
         this._animate();
       }
@@ -82,10 +81,9 @@ export default class HeroDemo extends Component {
       ...viewport,
       data: data,
       getPath: d => d.segments,
-      getColor: d => [23, 129, 127],
-      // getColor: d => [6, 229, 227],
-      opacity: 1,
-      strokeWidth: 4,
+      getColor: d => d.vendor === 0 ? [253,128,93] : [23,184,190],
+      opacity: 0.3,
+      strokeWidth: 2,
       trailLength: 180,
       currentTime: this.state.time
     });

@@ -79,6 +79,7 @@ export default class TripsLayer extends BaseLayer {
       return [...acc, l];
     }, []);
     this.setState({pathLengths, vertexCount});
+    console.log('Trips: ' + data.length + ' Vertices: ' + vertexCount);
   }
 
   updateUniforms() {

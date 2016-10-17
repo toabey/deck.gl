@@ -1,11 +1,11 @@
 var FLUSH_LIMIT = 5000;
+var LOOP_LENGTH = 3600;
+var TRAIL_LENGTH = 180;
 
 onmessage = function(e) {
   var segments;
   var result = [];
   var count = 0;
-  var loopLength = 3600;
-  var trailLength = 180;
 
   if (e.data) {
     var lines = e.data.split('\n');
@@ -21,8 +21,8 @@ onmessage = function(e) {
         result.push(trip);
         count++;
 
-        while (trip.endTime > loopLength - trailLength) {
-          trip = shiftTrip(trip, -loopLength);
+        while (trip.endTime > LOOP_LENGTH - TRAIL_LENGTH) {
+          trip = shiftTrip(trip, -LOOP_LENGTH);
           result.push(trip);
           count++;
         }
@@ -40,24 +40,27 @@ onmessage = function(e) {
 };
 
 function shiftTrip(trip, offset) {
+  var cutoffIndex = 0;
+  var segments = trip.segments.map(function(p, i) {
+    var t = p[2] + offset;
+    if (t < -TRAIL_LENGTH) cutoffIndex = i;
+    return [p[0], p[1], t];
+  }).slice(cutoffIndex);
+
   return {
+    vendor: trip.vendor,
     startTime: trip.startTime + offset,
     endTime: trip.endTime + offset,
-    segments: trip.segments.map(function(p) {
-      return [p[0], p[1], p[2] + offset];
-    })
+    segments: segments
   };
 }
 
 function decodeTrip(str, segments) {
-  var startTime = decodeBase(str.slice(0, 2), 90, 32);
-  var endTime = decodeBase(str.slice(2, 4), 90, 32);
-  var indices = str.slice(4).match(/([\x20-\x4c][\x4d-\xff]*)/g);
-  var segs = indices.map(function(i) {
-    var head = String.fromCharCode(i.charCodeAt(0) + 45);
-    var index = decodeBase(head + i.slice(1), 45, 77);
-    return segments[index];
-  });
+  var vendor = decodeBase(str.slice(0, 1), 90, 32)
+  var startTime = decodeBase(str.slice(1, 3), 90, 32);
+  var endTime = decodeBase(str.slice(3, 5), 90, 32);
+  var segs = decodeSegmentsArray(str.slice(5), segments);
+
   var projectedTimes = segs.reduce(function(acc, seg, i) {
     var t = 0;
     if (i > 0) {
@@ -68,6 +71,7 @@ function decodeTrip(str, segments) {
   var rT = (endTime - startTime) / projectedTimes[projectedTimes.length - 1];
 
   return {
+    vendor: vendor,
     startTime: startTime,
     endTime: endTime,
     segments: segs.reduce(function(acc, seg, i) {
@@ -77,6 +81,18 @@ function decodeTrip(str, segments) {
       }));
     }, [])
   };
+}
+
+function decodeSegmentsArray(str, segments) {
+  var tokens = str.split(/([\x20-\x4c])/);
+  var segs = [];
+
+  for(var i = 1; i < tokens.length - 1; i += 2) {
+    var segIndexStr = String.fromCharCode(tokens[i].charCodeAt(0) + 45) + tokens[i + 1];
+    var segIndex = decodeBase(segIndexStr, 45, 77);
+    segs.push(segments[segIndex]);
+  }
+  return segs;
 }
 
 function decodeSegments(str) {
