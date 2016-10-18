@@ -1,8 +1,11 @@
 importScripts('http://d3js.org/topojson.v1.min.js');
+var jsonText = '';
 
 onmessage = function(e) {
-  if (e.data) {
-    var data = JSON.parse(e.data);
+  jsonText += e.data.text;
+
+  if (e.data.event === 'load') {
+    var data = JSON.parse(jsonText);
     var choropleths = topojson.feature(data, data.objects.flows);
     var features = choropleths.features;
 

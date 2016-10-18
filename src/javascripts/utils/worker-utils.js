@@ -1,6 +1,8 @@
 const workers = {};
 
-export function parseDataWithWorker(workerUrl, rawData, callback) {
+export function StreamParser(workerUrl, callback) {
+  var parsedLength = 0;
+
   if (workers[workerUrl]) {
     workers[workerUrl].terminate();
   }
@@ -24,5 +26,22 @@ export function parseDataWithWorker(workerUrl, rawData, callback) {
     }
   };
 
-  workerInstance.postMessage(rawData);
+  this.onProgress = function(e) {
+    const {responseText} = e.target;
+    const lineBreak = responseText.lastIndexOf('\n') + 1;
+
+    workerInstance.postMessage({
+      event: 'progress',
+      text: responseText.slice(parsedLength, lineBreak)
+    });
+    parsedLength = lineBreak;
+  };
+
+  this.onLoad = function(target) {
+    const {responseText} = target;
+    workerInstance.postMessage({
+      event: 'load',
+      text: responseText.slice(parsedLength)
+    });
+  };
 }

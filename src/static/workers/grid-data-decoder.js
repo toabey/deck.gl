@@ -1,24 +1,19 @@
 var COORDINATE_PRECISION = 5;
 
 onmessage = function(e) {
+  var lines = e.data.text.split('\n');
+  var result = [];
 
-  if (e.data) {
-    var result = [];
-    var count = 0;
-    var lines = e.data.split('\n');
-
-    lines.forEach(function(line) {
-      var coords = decodeCoords(line);
-      for (var i = 0; i < coords.length; i += 2) {
-        result.push({
-          position: {x: coords[i], y: coords[i + 1]}
-        });
-      }
-      postMessage({action: 'add', data: result});
-    });
-
-    postMessage({action: 'end'});
-  }
+  lines.forEach(function(line) {
+    if (!line) return;
+    var coords = decodeCoords(line);
+    for (var i = 0; i < coords.length; i += 2) {
+      result.push({
+        position: {x: coords[i], y: coords[i + 1]}
+      });
+    }
+  });
+  postMessage({action: 'add', data: result});
 };
 
 function decodeCoords(str) {

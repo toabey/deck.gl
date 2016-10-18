@@ -33,7 +33,6 @@ export default class ChoroplethDemo extends Component {
 
   static get data() {
     return {
-      type: 'text',
       url: 'data/choropleth-data.json',
       worker: 'workers/choropleth-data-decoder.js'
     };

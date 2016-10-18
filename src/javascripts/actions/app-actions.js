@@ -1,5 +1,5 @@
-import * as request from 'd3-request';
-import {parseDataWithWorker} from '../utils/worker-utils';
+import {request, text} from 'd3-request';
+import {StreamParser} from '../utils/worker-utils';
 
 export function loadContent(filename) {
   return (dispatch, getState) => {
@@ -9,7 +9,7 @@ export function loadContent(filename) {
       return;
     }
     dispatch(loadContentStart(filename));
-    request.text(filename, (error, response) => {
+    text(filename, (error, response) => {
       dispatch(loadContentSuccess(filename, error ? error : response));
     });
   }
@@ -29,22 +29,19 @@ export function updateMap(viewport) {
   return {type: 'UPDATE_MAP', viewport};
 }
 
-export function loadData(owner, {type, url, worker}) {
+export function loadData(owner, {url, worker}) {
 
   return dispatch => {
     dispatch(loadDataStart(owner));
-    if (request[type]) {
-      request[type](url, (error, response) => {
-        if (!error) {
-          if (worker) {
-            parseDataWithWorker(worker, response, (data, meta) => {
-              dispatch(loadDataSuccess(owner, data, meta));
-            });
-          } else {
-            dispatch(loadDataSuccess(owner, response));
-          }
-        }
+    if (request) {
+      var req = request(url);
+      var dataParser = new StreamParser(worker, (data, meta) => {
+        dispatch(loadDataSuccess(owner, data, meta));
       });
+
+      req.on('progress', dataParser.onProgress)
+        .on('load', dataParser.onLoad)
+        .get();
     }
   };
 }

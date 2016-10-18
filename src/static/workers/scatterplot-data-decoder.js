@@ -1,45 +1,44 @@
 var FLUSH_LIMIT = 100000;
 var COORDINATE_PRECISION = 7;
+var sequence;
+var result = [];
+var count = 0;
 
 onmessage = function(e) {
-  var sequence;
-  var result = [];
-  var count = 0;
+  var lines = e.data.text.split('\n');
 
-  if (e.data) {
-    var lines = e.data.split('\n');
+  lines.forEach(function(l, i) {
+    if (!l.length) {
+      return;
+    }
 
-    lines.forEach(function(l, i) {
-      if (!l.length) {
-        return;
+    if (!sequence) {
+      sequence = decodeSequence(l);
+      return;
+    }
+
+    var bbox = decodeBbox(l.slice(0, 20));
+    var bitmap = decodeBitmap(l.slice(20));
+
+    for (var i = 0; i < bitmap.length; i++) {
+      if (bitmap[i] > 0) {
+        var point = [
+          bbox[0] + (bbox[2] - bbox[0]) * sequence[i * 2],
+          bbox[1] + (bbox[3] - bbox[1]) * sequence[i * 2 + 1],
+          bitmap[i] * 1
+        ];
+        result[count++] = point;
       }
+    }
 
-      if (i === 0) {
-        sequence = decodeSequence(l);
-        return;
-      }
+    if (count >= FLUSH_LIMIT) {
+      postMessage({action: 'add', data: result});
+      result = [];
+      count = 0;
+    }
+  });
 
-      var bbox = decodeBbox(l.slice(0, 20));
-      var bitmap = decodeBitmap(l.slice(20));
-
-      for (var i = 0; i < bitmap.length; i++) {
-        if (bitmap[i] > 0) {
-          var point = [
-            bbox[0] + (bbox[2] - bbox[0]) * sequence[i * 2],
-            bbox[1] + (bbox[3] - bbox[1]) * sequence[i * 2 + 1],
-            bitmap[i] * 1
-          ];
-          result[count++] = point;
-        }
-      }
-
-      if (count >= FLUSH_LIMIT) {
-        postMessage({action: 'add', data: result});
-        result = [];
-        count = 0;
-      }
-    });
-
+  if (e.data.event === 'load') {
     postMessage({action: 'add', data: result});
     postMessage({action: 'end'});
   }

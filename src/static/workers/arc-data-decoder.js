@@ -1,27 +1,28 @@
 var FLUSH_LIMIT = 100000;
 var COORDINATE_PRECISION = 5;
+var nodes = [];
 
 onmessage = function(e) {
-  var nodes = [];
-  var result = [];
-  var count = 0;
 
-  if (e.data) {
-    var lines = e.data.split('\n');
+  var lines = e.data.text.split('\n');
 
-    lines.forEach(function(l, i) {
-      if (!l.length) {
-        return;
-      }
-      var lng = decodeCoords(l.slice(0, 4));
-      var lat = decodeCoords(l.slice(4, 8));
-      var links = decodeLinks(l.slice(8));
+  lines.forEach(function(l, i) {
+    if (!l.length) {
+      return;
+    }
+    var lng = decodeCoords(l.slice(0, 4));
+    var lat = decodeCoords(l.slice(4, 8));
+    var links = decodeLinks(l.slice(8));
 
-      nodes.push({
-        coords: [lng, lat],
-        links: links
-      });
+    nodes.push({
+      coords: [lng, lat],
+      links: links
     });
+  });
+
+  if (e.data.event === 'load') {
+    var result = [];
+    var count = 0;
 
     nodes.forEach(function(n) {
 

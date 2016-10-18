@@ -9,7 +9,6 @@ export default class ScatterPlotDemo extends Component {
 
   static get data() {
     return {
-      type: 'text',
       url: 'data/scatterplot-data.txt',
       worker: 'workers/scatterplot-data-decoder.js'
     };

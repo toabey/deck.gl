@@ -2,45 +2,46 @@ var FLUSH_LIMIT = 5000;
 var LOOP_LENGTH = 3600;
 var TRAIL_LENGTH = 180;
 
+var segments;
+var result = [];
+var vertexCount = 0;
+var tripsCount = 0;
+
 onmessage = function(e) {
-  var segments;
-  var result = [];
-  var vertexCount = 0;
-  var tripsCount = 0;
 
-  if (e.data) {
-    var lines = e.data.split('\n');
+  var lines = e.data.text.split('\n');
 
-    lines.forEach(function(l, i) {
-      if (!l) {
-        return;
-      }
-      if (i === 0) {
-        segments = decodeSegments(l);
-      } else {
-        var trip = decodeTrip(l, segments);
+  lines.forEach(function(l, i) {
+    if (!l) {
+      return;
+    }
+    if (!segments) {
+      segments = decodeSegments(l);
+    } else {
+      var trip = decodeTrip(l, segments);
+      result.push(trip);
+      tripsCount++;
+      vertexCount += trip.segments.length;
+
+      while (trip.endTime > LOOP_LENGTH - TRAIL_LENGTH) {
+        trip = shiftTrip(trip, -LOOP_LENGTH);
         result.push(trip);
         tripsCount++;
         vertexCount += trip.segments.length;
-
-        while (trip.endTime > LOOP_LENGTH - TRAIL_LENGTH) {
-          trip = shiftTrip(trip, -LOOP_LENGTH);
-          result.push(trip);
-          tripsCount++;
-          vertexCount += trip.segments.length;
-        }
-
-        if (result.length >= FLUSH_LIMIT) {
-          postMessage({
-            action: 'add',
-            data: [result],
-            meta: {trips: tripsCount, vertices: vertexCount}
-          });
-          result = [];
-        }
       }
-    });
 
+      if (result.length >= FLUSH_LIMIT) {
+        postMessage({
+          action: 'add',
+          data: [result],
+          meta: {trips: tripsCount, vertices: vertexCount}
+        });
+        result = [];
+      }
+    }
+  });
+
+  if (e.data.event === 'load') {
     postMessage({
       action: 'add',
       data: [result],
