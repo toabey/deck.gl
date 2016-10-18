@@ -96,6 +96,15 @@
 .tab .markdown {
   padding-top: 72px;
 }
+.stat {
+  text-transform: uppercase;
+  font-size: 0.833em;
+
+  b {
+    display: block;
+    font-size: 3em;
+  }
+}
 .options-panel {
   width: 284px;
   background: #fff;
@@ -126,6 +135,15 @@
     width: 100%;
     height: 20px;
     border: solid 1px #ccc;
+  }
+  h3 {
+    font-size: 1.2em;
+    font-weight: 500;
+    margin: 8px 0;
+  }
+
+  p {
+    margin-bottom: 16px;
   }
 }
 code {

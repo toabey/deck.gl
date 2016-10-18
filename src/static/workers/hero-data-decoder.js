@@ -5,7 +5,8 @@ var TRAIL_LENGTH = 180;
 onmessage = function(e) {
   var segments;
   var result = [];
-  var count = 0;
+  var vertexCount = 0;
+  var tripsCount = 0;
 
   if (e.data) {
     var lines = e.data.split('\n');
@@ -19,22 +20,32 @@ onmessage = function(e) {
       } else {
         var trip = decodeTrip(l, segments);
         result.push(trip);
-        count++;
+        tripsCount++;
+        vertexCount += trip.segments.length;
 
         while (trip.endTime > LOOP_LENGTH - TRAIL_LENGTH) {
           trip = shiftTrip(trip, -LOOP_LENGTH);
           result.push(trip);
-          count++;
+          tripsCount++;
+          vertexCount += trip.segments.length;
         }
 
         if (result.length >= FLUSH_LIMIT) {
-          postMessage({action: 'add', data: [result]});
+          postMessage({
+            action: 'add',
+            data: [result],
+            meta: {trips: tripsCount, vertices: vertexCount}
+          });
           result = [];
         }
       }
     });
 
-    postMessage({action: 'add', data: [result]});
+    postMessage({
+      action: 'add',
+      data: [result],
+      meta: {trips: tripsCount, vertices: vertexCount}
+    });
     postMessage({action: 'end'});
   }
 };

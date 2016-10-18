@@ -18,3 +18,15 @@ export function normalizeParam(p) {
   }
   return {...p, value, displayValue};
 }
+
+export function readableInteger(x) {
+  if (x < 1000) {
+    return x.toString();
+  }
+  x /= 1000;
+  if (x < 1000) {
+    return x.toFixed(1) + 'K';
+  }
+  x /= 1000;
+  return x.toFixed(1) + 'M';
+}

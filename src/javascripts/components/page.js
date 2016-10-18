@@ -78,7 +78,6 @@ class Page extends Component {
 
     return {
       ...tabs,
-      demoInfo: DemoComponent && DemoComponent.info,
       demo: DemoComponent ? demo : null
     };
   }
@@ -96,6 +95,7 @@ class Page extends Component {
     const {viewport, app: {params, owner, data}} = this.props;
     const {demo} = this.state;
     const DemoComponent = Demos[demo];
+    const dataLoaded = owner === demo ? data : null;
 
     return (
       <MapGL
@@ -105,20 +105,21 @@ class Page extends Component {
         onChangeViewport={ this.props.updateMap }>
 
         <DemoComponent viewport={viewport} params={params}
-          data={owner === demo ? data : null} />
+          data={dataLoaded} />
 
       </MapGL>
     )
   }
 
   _renderOptions() {
-    const {app: {params}} = this.props;
-    const {demoInfo} = this.state;
+    const {app: {params, owner, meta}} = this.props;
+    const {demo} = this.state;
+    const DemoComponent = Demos[demo];
+    const metaLoaded = owner === demo ? meta : {};
 
     return (
       <div className="options-panel">
-        <h3>{ demoInfo.title }</h3>
-        <p>{ demoInfo.desc }</p>
+        { DemoComponent.renderInfo(metaLoaded) }
         { Object.keys(params).length > 0 && <hr /> }
         {
           Object.keys(params).map((name, i) => (

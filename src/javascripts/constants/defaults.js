@@ -22,6 +22,7 @@ export const DEFAULT_VIEWPORT_STATE = {
 
 export const DEFAULT_APP_STATE = {
   owner: null,
+  meta: {},
   data: null,
   params: {}
 };

@@ -31,13 +31,6 @@ export default class ArcDemo extends Component {
     this.state = {};
   }
 
-  static get info() {
-    return {
-      title: 'United States County-to-county Migration 2009-2013',
-      desc: 'Arcs show migration flows from county to county'
-    };
-  }
-
   static get data() {
     return {
       type: 'text',
@@ -63,11 +56,20 @@ export default class ArcDemo extends Component {
     };
   }
 
+  static renderInfo(meta) {
+    return (
+      <div>
+        <h3>United States County-to-county Migration 2009-2013</h3>
+        <p>Arcs show migration flows from county to county</p>
+        <div className="stat">Arcs<b>{ meta.count || 0 }</b></div>
+      </div>
+    );
+  }
+
   componentWillReceiveProps(nextProps) {
     const {data} = nextProps;
     if (data && data !== this.props.data) {
       this._computeQuantile(data);
-      console.log('Arc count: ' + data.length);
     }
   }
 

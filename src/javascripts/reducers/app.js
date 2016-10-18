@@ -17,9 +17,7 @@ export default function appReducer(state = DEFAULT_APP_STATE, action) {
     if (action.payload.owner !== state.owner) {
       return state;
     }
-    return {...state,
-      data: action.payload.data
-    };
+    return {...state, ...action.payload};
 
   case 'USE_PARAMS': {
     const params = {};

@@ -25,7 +25,6 @@
 attribute vec3 positions;
 attribute vec3 colors;
 
-uniform mat4 worldMatrix;
 uniform mat4 projectionMatrix;
 uniform float opacity;
 uniform float currentTime;

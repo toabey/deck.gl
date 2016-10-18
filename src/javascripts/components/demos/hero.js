@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {DeckGLOverlay} from 'deck.gl';
 import TripsLayer from './trips-layer/trips-layer';
 import {MAPBOX_STYLES} from '../../constants/defaults';
+import {readableInteger} from '../../utils/format-utils';
 
 const BLENDING = {
   enable: true,
@@ -11,13 +12,6 @@ const BLENDING = {
 };
 
 export default class HeroDemo extends Component {
-
-  static get info() {
-    return {
-      title: 'Yellow Cab Vs. Green Cab Trips in Manhattan',
-      desc: 'June 16, 2016 21:00 - 22:00'
-    };
-  }
 
   static get data() {
     return {
@@ -42,6 +36,23 @@ export default class HeroDemo extends Component {
     };
   }
 
+  static renderInfo(meta) {
+    return (
+      <div>
+        <h3>Yellow Cab Vs. Green Cab Trips in Manhattan</h3>
+        <p>June 16, 2016 21:00 - 22:00</p>
+        <div className="layout">
+          <div className="stat col-1-2">Trips
+            <b>{ readableInteger(meta.trips || 0) }</b>
+          </div>
+          <div className="stat col-1-2">Vertices
+            <b>{ readableInteger(meta.vertices || 0) }</b>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -60,7 +71,7 @@ export default class HeroDemo extends Component {
   }
 
   componentWillUnmount() {
-    if (!this._animation) {
+    if (this._animation) {
       cancelAnimationFrame(this._animation);
     }
   }

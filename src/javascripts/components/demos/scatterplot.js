@@ -3,15 +3,9 @@ import React, {Component} from 'react';
 import {DeckGLOverlay, ScatterplotLayer} from 'deck.gl';
 
 import {MAPBOX_STYLES} from '../../constants/defaults';
+import {readableInteger} from '../../utils/format-utils';
 
 export default class ScatterPlotDemo extends Component {
-
-  static get info() {
-    return {
-      title: 'Every Person in New York City',
-      desc: 'Each dot accounts for 10 people. Density per tract from 2015 census data.'
-    };
-  }
 
   static get data() {
     return {
@@ -40,11 +34,16 @@ export default class ScatterPlotDemo extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const {data} = nextProps;
-    if (data && data !== this.props.data) {
-      console.log('Point count: ' + data.length);
-    }
+  static renderInfo(meta) {
+    return (
+      <div>
+        <h3>Every Person in New York City</h3>
+        <p>Each dot accounts for 10 people. Density per tract from 2015 census data.</p>
+        <div className="stat">Instances
+          <b>{ readableInteger(meta.count || 0) }</b>
+        </div>
+      </div>
+    );
   }
 
   render() {

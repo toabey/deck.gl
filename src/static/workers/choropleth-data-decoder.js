@@ -24,7 +24,11 @@ onmessage = function(e) {
       f.properties.netFlow = netFlow;
     });
 
-    postMessage({action: 'add', data: [choropleths]});
+    postMessage({
+      action: 'add',
+      data: [choropleths],
+      meta: {count: features.length}
+    });
     postMessage({action: 'end'});
   }
 };

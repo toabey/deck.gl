@@ -31,13 +31,6 @@ export default class ChoroplethDemo extends Component {
     this.state = {};
   }
 
-  static get info() {
-    return {
-      title: 'United States County-to-county Migration 2009-2013',
-      desc: 'Color show net gain/loss of population'
-    };
-  }
-
   static get data() {
     return {
       type: 'text',
@@ -61,12 +54,21 @@ export default class ChoroplethDemo extends Component {
     };
   }
 
+  static renderInfo(meta) {
+    return (
+      <div>
+        <h3>United States County-to-county Migration 2009-2013</h3>
+        <p>Color show net gain/loss of population</p>
+        <div className="stat">Choropleths<b>{ meta.count || 0 }</b></div>
+      </div>
+    );
+  }
+
   componentWillReceiveProps(nextProps) {
     const {data} = nextProps;
     if (data && data !== this.props.data) {
       const scale = this._computeQuantile(data, null);
       this.setState({scale});
-      console.log('Choropleth count: ' + data[0].features.length);
     }
   }
 

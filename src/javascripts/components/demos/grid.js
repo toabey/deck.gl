@@ -6,13 +6,6 @@ import {MAPBOX_STYLES} from '../../constants/defaults';
 
 export default class GridDemo extends Component {
 
-  static get info() {
-    return {
-      title: 'California Public Transit Distribution',
-      desc: 'Accessibility to public transportation'
-    };
-  }
-
   static get data() {
     return {
       type: 'text',
@@ -38,11 +31,14 @@ export default class GridDemo extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const {data} = nextProps;
-    if (data && data !== this.props.data) {
-      console.log('Sample count: ' + data.length);
-    }
+  static renderInfo(meta) {
+    return (
+      <div>
+        <h3>California Public Transit Distribution</h3>
+        <p>Accessibility to public transportation</p>
+        <div className="stat">Samples<b>{ meta.count || 0 }</b></div>
+      </div>
+    );
   }
 
   render() {

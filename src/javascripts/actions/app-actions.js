@@ -37,8 +37,8 @@ export function loadData(owner, {type, url, worker}) {
       request[type](url, (error, response) => {
         if (!error) {
           if (worker) {
-            parseDataWithWorker(worker, response, data => {
-              dispatch(loadDataSuccess(owner, data));
+            parseDataWithWorker(worker, response, (data, meta) => {
+              dispatch(loadDataSuccess(owner, data, meta));
             });
           } else {
             dispatch(loadDataSuccess(owner, response));
@@ -53,10 +53,11 @@ function loadDataStart(owner) {
   return {type: 'LOAD_DATA_START', owner};
 }
 
-function loadDataSuccess(owner, data) {
+function loadDataSuccess(owner, data, meta) {
+  meta = meta || {count: data.length};
   return {
     type: 'LOAD_DATA_SUCCESS',
-    payload: {owner, data}
+    payload: {owner, data, meta}
   };
 }
 

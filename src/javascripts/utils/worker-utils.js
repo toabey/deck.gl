@@ -10,16 +10,15 @@ export function parseDataWithWorker(workerUrl, rawData, callback) {
   let streamedData = [];
 
   workerInstance.onmessage = e => {
-    const {action, data} = e.data;
+    const {action, data, meta} = e.data;
     switch(action) {
     case 'add':
       if (data && data.length) {
         streamedData = streamedData.concat(data);
+        callback(streamedData, meta);
       }
-      callback(streamedData);
       break;
     case 'end':
-      callback(streamedData);
       workerInstance.terminate();
       break;
     }
