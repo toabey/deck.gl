@@ -10,6 +10,7 @@ export default function appReducer(state = DEFAULT_APP_STATE, action) {
     }
     return {...state,
       owner: action.owner,
+      meta: {},
       data: null
     };
 
