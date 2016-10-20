@@ -37,31 +37,32 @@ export default class Home extends Component {
         <section id="banner">
           <div className="container">
             <h1>deck.gl</h1>
-            <p>High performance map visualization framework for React</p>
+            <p>Large-scale WebGL-powered Data Visualization</p>
             <button>Get started</button>
           </div>
         </section>
 
         <section id="features">
           <div className="container">
-            <h2>Scientific-grade data visualizations for maps</h2>
+            <h2>deck.gl is a WebGL-powered framework for visual exploratory data analysis of large datasets.</h2>
             <hr className="short" />
 
-            <h3>GPU Accelerated</h3>
-            <p>We leverage shaders and the GPU to ensure high frame rates with
-               large data sets.
+            <h3>A Layered Approach to Visualization</h3>
+            <p>Based on the notion of layers and instancing deck.gl is suitable to reason about and display data, perform 
+            on-the-fly aggregations and visually explore large datasets.
             </p>
 
-            <h3>Cartographic Projections Made Easy</h3>
-            <p>Doesn't matter if your data is in latitude/longitudes, meter
-               offsets, or just plain x,y,z coordinates. deck.gl layers
-               can handle them all.
+            <h3>High-precision computations in the GPU</h3>
+            <p>By emulating float64 computations in the GPU we support rendering datasets with unparalleled accuracy and performance.
             </p>
 
-            <h3>Layer Catalog</h3>
-            <p>Comes with a core set of beautiful, fast layers to quickly
-               visualize your GIS data. If those aren’t enough,
-               you can easily customize them or create your own layers!
+            <h3>Robust Architecture</h3>
+            <p>deck.gl is built using the latest JavaScript standards, including ES2016 and a rich ecosystem of libraries and settings that enable easy debugging and profiling of WebGL applications.
+            </p>
+
+            <h3>Interoperability with Mapbox</h3>
+            <p>
+            deck.gl is interoperable with MapboxGL-js. We coordinate with Mapbox's camera system to provide compelling 2D and 3D visualizations on top of Mapbox's camera system.
             </p>
           </div>
         </section>
